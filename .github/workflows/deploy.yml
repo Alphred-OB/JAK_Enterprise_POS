@@ -56,8 +56,9 @@ jobs:
             echo "Moved to: $(pwd)"
 
             # Safety check: Ensure we are not in a dangerous system directory
-            if [[ "$(pwd)" == "/" || "$(pwd)" == "/home" || "$(pwd)" == "/root" ]]; then
-              echo "CRITICAL SAFETY ERROR: Attempted deployment to a protected system directory."
+            CURRENT_DIR="$(pwd)"
+            if [ "$CURRENT_DIR" = "/" ] || [ "$CURRENT_DIR" = "/home" ] || [ "$CURRENT_DIR" = "/root" ]; then
+              echo "CRITICAL SAFETY ERROR: Attempted deployment to a protected system directory ($CURRENT_DIR)."
               exit 1
             fi
 
