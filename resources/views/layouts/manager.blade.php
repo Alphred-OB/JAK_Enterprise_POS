@@ -120,6 +120,24 @@
                     @endif
                 </a>
 
+                <a href="{{ route('manager.inventory.conflicts') }}" class="nav-link {{ request()->routeIs('manager.inventory.conflicts') ? 'active' : '' }} flex items-center justify-between px-4 py-4 rounded-2xl text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all group">
+                    <div class="flex items-center gap-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                        <span class="text-sm font-black uppercase tracking-tight">Stock Conflicts</span>
+                    </div>
+                    @php
+                        $unresolvedConflicts = \App\Models\SaleItem::where('status', 'conflict')->count();
+                    @endphp
+                    @if($unresolvedConflicts > 0)
+                        <div class="flex items-center justify-center">
+                            <span class="relative flex h-5 w-5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-5 w-5 bg-red-600 items-center justify-center text-[9px] font-black text-white tabular-nums">{{ $unresolvedConflicts }}</span>
+                            </span>
+                        </div>
+                    @endif
+                </a>
+
                 @if(auth()->user()->role !== 'inventory_officer')
                 <a href="{{ route('manager.returns.index') }}" class="nav-link {{ request()->routeIs('manager.returns.*') ? 'active' : '' }} flex items-center justify-between px-4 py-4 rounded-2xl text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all group">
                     <div class="flex items-center gap-4">

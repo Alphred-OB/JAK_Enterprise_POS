@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
             
             // Count suspicious/flagged activities from today
             $flaggedCount = \App\Models\Activity::whereDate('created_at', now()->today())
-                ->whereIn('action', ['stock_adjusted', 'sale_cancelled', 'discount_applied', 'price_changed', 'issue_reported'])
+                ->whereIn('action', ['stock_adjusted', 'sale_cancelled', 'discount_applied', 'price_changed', 'issue_reported', 'inventory_conflict'])
                 ->count();
 
             // Count returns from today

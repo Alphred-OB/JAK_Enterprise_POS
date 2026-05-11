@@ -83,22 +83,42 @@ class SaleController extends Controller
                     ]);
                 }
 
-                // 2. Create Sale Items and Update Stock
-                foreach ($request->items as $item) {
-                    $product = Product::findOrFail($item['id']);
-                    $sale->items()->create([
-                        'product_id' => $product->id,
-                        'cost_price' => $product->cost_price,
-                        'quantity' => $item['qty'],
-                        'unit_price' => $item['selling_price'],
-                        'total' => $item['selling_price'] * $item['qty'],
-                    ]);
+                    // 2. Create Sale Items and Update Stock
+                    foreach ($request->items as $item) {
+                        $product = Product::findOrFail($item['id']);
+                        
+                        $status = 'normal';
+                        $conflictNote = null;
 
-                    // Deduct from Product Stock
-                    if ($product) {
-                        $product->decrement('stock_quantity', $item['qty']);
+                        // Check if this sale causes negative stock (Potential sync conflict)
+                        if ($product->stock_quantity < $item['qty']) {
+                            $status = 'conflict';
+                            $conflictNote = "Stock discrepancy during sync: Item sold when system stock was {$product->stock_quantity}. Resulting in negative stock.";
+                            
+                            \App\Models\Activity::log('inventory_conflict', "Stock conflict for '{$product->name}' during sync. Sold {$item['qty']} while only {$product->stock_quantity} available.", [
+                                'product_id' => $product->id,
+                                'sale_id' => $sale->id,
+                                'receipt_number' => $sale->receipt_number,
+                                'available' => $product->stock_quantity,
+                                'sold' => $item['qty']
+                            ]);
+                        }
+
+                        $sale->items()->create([
+                            'product_id' => $product->id,
+                            'cost_price' => $product->cost_price,
+                            'quantity' => $item['qty'],
+                            'unit_price' => $item['selling_price'],
+                            'total' => $item['selling_price'] * $item['qty'],
+                            'status' => $status,
+                            'conflict_note' => $conflictNote
+                        ]);
+
+                        // Deduct from Product Stock
+                        if ($product) {
+                            $product->decrement('stock_quantity', $item['qty']);
+                        }
                     }
-                }
 
                 return response()->json([
                     'success' => true,

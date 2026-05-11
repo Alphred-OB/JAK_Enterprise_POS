@@ -14,10 +14,13 @@ class SaleItem extends Model
     protected $fillable = [
         'sale_id',
         'product_id',
+        'cost_price',
         'quantity',
         'unit_price',
         'discount',
-        'total'
+        'total',
+        'status',
+        'conflict_note'
     ];
 
     public function sale()

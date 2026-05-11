@@ -105,6 +105,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('activities', [\App\Http\Controllers\Manager\ActivityController::class, 'index'])->name('manager.activities.index');
         Route::get('activities/flagged', [\App\Http\Controllers\Manager\ActivityController::class, 'flagged'])->name('manager.activities.flagged');
 
+        // Inventory Conflict Resolution
+        Route::get('inventory/conflicts', [\App\Http\Controllers\Manager\InventoryConflictController::class, 'index'])->name('manager.inventory.conflicts');
+        Route::post('inventory/conflicts/{item}/resolve', [\App\Http\Controllers\Manager\InventoryConflictController::class, 'resolve'])->name('manager.inventory.resolve');
+
         // Shift Reconciliations
         Route::get('shifts', [\App\Http\Controllers\Manager\ShiftController::class, 'index'])->name('manager.shifts.index');
 

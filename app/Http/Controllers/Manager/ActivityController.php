@@ -42,7 +42,7 @@ class ActivityController extends Controller
     public function flagged(Request $request)
     {
         $query = Activity::with(['user', 'product'])
-            ->whereIn('action', ['stock_adjusted', 'sale_cancelled', 'discount_applied', 'price_changed', 'issue_reported'])
+            ->whereIn('action', ['stock_adjusted', 'sale_cancelled', 'discount_applied', 'price_changed', 'issue_reported', 'inventory_conflict'])
             ->latest();
 
         // Apply same filters to flagged view
