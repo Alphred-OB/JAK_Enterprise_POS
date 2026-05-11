@@ -16,10 +16,10 @@ jobs:
       - name: Execute Remote Deployment via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          host: "${{ secrets.SSH_HOST }}"
+          username: "${{ secrets.SSH_USER }}"
+          key: "${{ secrets.SSH_PRIVATE_KEY }}"
+          passphrase: "${{ secrets.SSH_PASSPHRASE }}"
           script_stop: true # Stop execution on any error
           script: |
             # Enable strict error handling

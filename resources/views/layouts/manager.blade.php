@@ -101,6 +101,13 @@
                     @endif
                 </a>
 
+                @if(auth()->user()->role !== 'inventory_officer')
+                <a href="{{ route('manager.categories.index') }}" class="nav-link {{ request()->routeIs('manager.categories.*') ? 'active' : '' }} flex items-center gap-4 px-4 py-4 rounded-2xl text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all group">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" /></svg>
+                    <span class="text-sm font-black uppercase tracking-tight">Categories</span>
+                </a>
+                @endif
+
                 <a href="{{ route('manager.stock.audit') }}" class="nav-link {{ request()->routeIs('manager.stock.*') ? 'active' : '' }} flex items-center justify-between px-4 py-4 rounded-2xl text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all group">
                     <div class="flex items-center gap-4">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
@@ -114,14 +121,31 @@
                 </a>
 
                 @if(auth()->user()->role !== 'inventory_officer')
-                <a href="{{ route('manager.returns.index') }}" class="nav-link {{ request()->routeIs('manager.returns.*') ? 'active' : '' }} flex items-center gap-4 px-4 py-4 rounded-2xl text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all group">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 15v-1a4 4 0 00-4-4H8m0 0l3 3m-3-3l3-3m9 14V5a2 2 0 00-2-2H6a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-                    <span class="text-sm font-black uppercase tracking-tight">Returns & Refunds</span>
+                <a href="{{ route('manager.returns.index') }}" class="nav-link {{ request()->routeIs('manager.returns.*') ? 'active' : '' }} flex items-center justify-between px-4 py-4 rounded-2xl text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all group">
+                    <div class="flex items-center gap-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 15v-1a4 4 0 00-4-4H8m0 0l3 3m-3-3l3-3m9 14V5a2 2 0 00-2-2H6a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                        <span class="text-sm font-black uppercase tracking-tight">Returns & Refunds</span>
+                    </div>
+                    @if(isset($returnCount) && $returnCount > 0)
+                        <div class="flex items-center justify-center">
+                            <span class="relative inline-flex rounded-full h-5 w-5 bg-blue-100 items-center justify-center text-[9px] font-black text-blue-600 tabular-nums">{{ $returnCount }}</span>
+                        </div>
+                    @endif
                 </a>
 
-                <a href="{{ route('manager.shifts.index') }}" class="nav-link {{ request()->routeIs('manager.shifts.*') ? 'active' : '' }} flex items-center gap-4 px-4 py-4 rounded-2xl text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all group">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    <span class="text-sm font-black uppercase tracking-tight">Cash Reconciliations</span>
+                <a href="{{ route('manager.shifts.index') }}" class="nav-link {{ request()->routeIs('manager.shifts.*') ? 'active' : '' }} flex items-center justify-between px-4 py-4 rounded-2xl text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all group">
+                    <div class="flex items-center gap-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <span class="text-sm font-black uppercase tracking-tight">Cash Reconciliations</span>
+                    </div>
+                    @if(isset($activeShiftCount) && $activeShiftCount > 0)
+                        <div class="flex items-center justify-center">
+                            <span class="relative flex h-5 w-5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-5 w-5 bg-green-500 items-center justify-center text-[9px] font-black text-white tabular-nums">{{ $activeShiftCount }}</span>
+                            </span>
+                        </div>
+                    @endif
                 </a>
 
                 <a href="{{ route('manager.expenses.index') }}" class="nav-link {{ request()->routeIs('manager.expenses.*') ? 'active' : '' }} flex items-center gap-4 px-4 py-4 rounded-2xl text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all group">
@@ -165,9 +189,19 @@
                     <span class="text-sm font-black uppercase tracking-tight">History Log</span>
                 </a>
 
-                <a href="{{ route('manager.activities.flagged') }}" class="nav-link {{ request()->routeIs('manager.activities.flagged') ? 'active' : '' }} flex items-center gap-4 px-4 py-4 rounded-2xl text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all group">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                    <span class="text-sm font-black uppercase tracking-tight">Safety Alerts</span>
+                <a href="{{ route('manager.activities.flagged') }}" class="nav-link {{ request()->routeIs('manager.activities.flagged') ? 'active' : '' }} flex items-center justify-between px-4 py-4 rounded-2xl text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all group">
+                    <div class="flex items-center gap-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                        <span class="text-sm font-black uppercase tracking-tight">Safety Alerts</span>
+                    </div>
+                    @if(isset($flaggedCount) && $flaggedCount > 0)
+                        <div class="flex items-center justify-center">
+                            <span class="relative flex h-5 w-5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-5 w-5 bg-amber-500 items-center justify-center text-[9px] font-black text-white tabular-nums">{{ $flaggedCount }}</span>
+                            </span>
+                        </div>
+                    @endif
                 </a>
 
                 @endif
@@ -267,39 +301,6 @@
 
     @stack('scripts')
     
-    <script>
-        // Register Service Worker
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').then(registration => {
-                    console.log('ServiceWorker registration successful');
-                }).catch(err => {
-                    console.log('ServiceWorker registration failed: ', err);
-                });
-            });
-        }
-
-        // Capture PWA Install Prompt globally
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            // Dispatch a custom event so Alpine components know it's installable
-            window.dispatchEvent(new CustomEvent('pwa-installable'));
-        });
-
-        window.installPWA = async function() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    console.log('User accepted the PWA prompt');
-                }
-                deferredPrompt = null;
-            } else {
-                alert("The app is already installed or your browser doesn't support automatic installation. Try installing from your browser menu (e.g., 'Add to Home Screen').");
-            }
-        };
-    </script>
+    @stack('scripts')
 </body>
 </html>

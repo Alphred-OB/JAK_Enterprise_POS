@@ -93,6 +93,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
         ]);
         Route::post('customers/{customer}/repayment', [\App\Http\Controllers\Manager\CustomerController::class, 'repayment'])->name('manager.customers.repayment');
 
+        // Category Management
+        Route::resource('categories', \App\Http\Controllers\Manager\CategoryController::class)->names([
+            'index' => 'manager.categories.index',
+            'store' => 'manager.categories.store',
+            'update' => 'manager.categories.update',
+            'destroy' => 'manager.categories.destroy',
+        ])->only(['index', 'store', 'update', 'destroy']);
+
         // Activity & Audit Logs
         Route::get('activities', [\App\Http\Controllers\Manager\ActivityController::class, 'index'])->name('manager.activities.index');
         Route::get('activities/flagged', [\App\Http\Controllers\Manager\ActivityController::class, 'flagged'])->name('manager.activities.flagged');
