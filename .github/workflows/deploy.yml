@@ -1,0 +1,111 @@
+name: Production Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy JAK_Enterprise_POS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Execute Remote Deployment via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          script_stop: true # Stop execution on any error
+          script: |
+            # Enable strict error handling
+            set -e
+
+            # --- 1. CRITICAL VALIDATION & SAFETY CHECKS ---
+            
+            # Ensure DEPLOY_PATH is not empty to prevent dangerous root operations
+            if [ -z "${{ secrets.DEPLOY_PATH }}" ]; then
+              echo "CRITICAL ERROR: DEPLOY_PATH secret is empty. Aborting to prevent accidental data loss."
+              exit 1
+            fi
+
+            DEPLOY_TARGET="${{ secrets.DEPLOY_PATH }}"
+            
+            echo "--- Deployment Identity ---"
+            echo "Project: JAK_Enterprise_POS"
+            echo "Host: $(hostname)"
+            echo "User: $(whoami)"
+            echo "Current working directory: $(pwd)"
+            echo "Target deployment path: $DEPLOY_TARGET"
+
+            # Verify target directory exists before proceeding
+            if [ ! -d "$DEPLOY_TARGET" ]; then
+              echo "CRITICAL ERROR: The directory $DEPLOY_TARGET does not exist on the server."
+              echo "Please create the directory manually first to confirm isolation."
+              exit 1
+            fi
+
+            # Move into deployment directory safely
+            cd "$DEPLOY_TARGET"
+            echo "Moved to: $(pwd)"
+
+            # Safety check: Ensure we are not in a dangerous system directory
+            if [[ "$(pwd)" == "/" || "$(pwd)" == "/home" || "$(pwd)" == "/root" ]]; then
+              echo "CRITICAL SAFETY ERROR: Attempted deployment to a protected system directory."
+              exit 1
+            fi
+
+            # --- 2. ENVIRONMENT PROTECTION ---
+
+            # Create a timestamped backup of the .env file before any git operations
+            if [ -f ".env" ]; then
+              TIMESTAMP=$(date +%Y%m%d%H%M%S)
+              echo "Backing up existing .env to .env.backup.$TIMESTAMP"
+              cp .env ".env.backup.$TIMESTAMP"
+            else
+              echo "NOTICE: No existing .env file found in target path."
+            fi
+
+            # --- 3. REPOSITORY MANAGEMENT ---
+
+            # Determine if we need to clone or update
+            if [ ! -d ".git" ]; then
+              echo "No Git repository found. Initializing clone into $DEPLOY_TARGET..."
+              # Using a temporary clone and moving files is safest if directory is non-empty
+              git clone https://github.com/Alphred-OB/JAK_Enterprise_POS.git .
+            else
+              echo "Existing repository detected. Syncing with origin/main..."
+              # Use fetch and hard reset instead of pull for a clean production state
+              git fetch origin main
+              git reset --hard origin/main
+            fi
+
+            # --- 4. POST-DEPLOYMENT TASKS (Uncomment as needed) ---
+
+            # echo "Setting Maintenance Mode..."
+            # php artisan down || true
+
+            # echo "Installing Composer dependencies..."
+            # composer install --no-dev --optimize-autoloader --no-interaction
+
+            # echo "Installing NPM dependencies and building assets..."
+            # npm install
+            # npm run build
+
+            # echo "Running Database Migrations..."
+            # php artisan migrate --force
+
+            # echo "Clearing and Rebuilding Caches..."
+            # php artisan optimize
+            # php artisan view:cache
+            # php artisan event:cache
+
+            # echo "Taking application live..."
+            # php artisan up
+
+            echo "--- DEPLOYMENT SUCCESSFUL ---"
+            echo "JAK_Enterprise_POS has been deployed to $DEPLOY_TARGET"
