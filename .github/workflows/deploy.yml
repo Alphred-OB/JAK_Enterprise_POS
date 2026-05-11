@@ -73,41 +73,33 @@ jobs:
             fi
 
             # --- 3. REPOSITORY MANAGEMENT ---
-
-            # Determine if we need to clone or update
             if [ ! -d ".git" ]; then
-              echo "No Git repository found. Initializing clone into $DEPLOY_TARGET..."
-              # Using a temporary clone and moving files is safest if directory is non-empty
-              git clone https://github.com/Alphred-OB/JAK_Enterprise_POS.git .
+              echo "Initializing new repository in $DEPLOY_TARGET..."
+              git init
+              git remote add origin https://github.com/Alphred-OB/JAK_Enterprise_POS.git
+              git fetch
+              git checkout -t origin/main -f
             else
               echo "Existing repository detected. Syncing with origin/main..."
-              # Use fetch and hard reset instead of pull for a clean production state
               git fetch origin main
               git reset --hard origin/main
             fi
 
-            # --- 4. POST-DEPLOYMENT TASKS (Uncomment as needed) ---
+            # --- 4. POST-DEPLOYMENT TASKS ---
+            
+            echo "Installing Composer dependencies..."
+            composer install --no-dev --optimize-autoloader --no-interaction
 
-            # echo "Setting Maintenance Mode..."
-            # php artisan down || true
+            echo "Installing NPM dependencies and building assets..."
+            npm install && npm run build
 
-            # echo "Installing Composer dependencies..."
-            # composer install --no-dev --optimize-autoloader --no-interaction
+            echo "Running Database Migrations..."
+            php artisan migrate --force
 
-            # echo "Installing NPM dependencies and building assets..."
-            # npm install
-            # npm run build
-
-            # echo "Running Database Migrations..."
-            # php artisan migrate --force
-
-            # echo "Clearing and Rebuilding Caches..."
-            # php artisan optimize
-            # php artisan view:cache
-            # php artisan event:cache
-
-            # echo "Taking application live..."
-            # php artisan up
+            echo "Clearing and Rebuilding Caches..."
+            php artisan optimize
+            php artisan view:cache
+            php artisan event:cache
 
             echo "--- DEPLOYMENT SUCCESSFUL ---"
             echo "JAK_Enterprise_POS has been deployed to $DEPLOY_TARGET"
