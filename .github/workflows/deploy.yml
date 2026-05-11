@@ -1,4 +1,4 @@
-# Triggering POSIX test deployment: 2026-05-11 15:13
+# Triggering Debug Deployment: 2026-05-11 15:16
 name: Production Deployment
 
 on:
@@ -22,85 +22,109 @@ jobs:
           key: "${{ secrets.SSH_KEY }}"
           port: "${{ secrets.PORT }}"
           passphrase: "${{ secrets.SSH_PASSPHRASE }}"
-          script_stop: true # Stop execution on any error
+          script_stop: true
           script: |
-            # Enable strict error handling
+            # --- DEBUG DEPLOYMENT SCRIPT (POSIX COMPLIANT) ---
             set -e
 
-            # --- 1. CRITICAL VALIDATION & SAFETY CHECKS ---
+            # Helper for logging
+            log() { echo "[$(date +'%Y-%m-%d %H:%M:%S')] $1"; }
+
+            log "🚀 [START] Beginning production deployment..."
+
+            # --- PRE-FLIGHT ENVIRONMENT CHECK ---
+            log "[DEBUG] Current Directory: $(pwd)"
+            log "[DEBUG] Directory Listing:"
+            ls -la
+
+            log "[DEBUG] Checking System Dependencies..."
+            php -v | head -n 1 || log "⚠️ Warning: php command not found"
+            git --version || log "⚠️ Warning: git command not found"
+            composer --version --no-ansi | head -n 1 || log "⚠️ Warning: composer command not found"
+            node -v || log "⚠️ Warning: node command not found"
+            npm -v || log "⚠️ Warning: npm command not found"
+
+            # --- STEP 1: SAFETY VALIDATIONS ---
+            log "[STEP 1] Validating deployment path..."
             
-            # Ensure DEPLOY_PATH is not empty to prevent dangerous root operations
             if [ -z "${{ secrets.DEPLOY_PATH }}" ]; then
-              echo "CRITICAL ERROR: DEPLOY_PATH secret is empty. Aborting to prevent accidental data loss."
+              log "❌ ERROR: DEPLOY_PATH secret is empty."
               exit 1
             fi
 
             DEPLOY_TARGET="${{ secrets.DEPLOY_PATH }}"
-            
-            echo "--- Deployment Identity ---"
-            echo "Project: JAK_Enterprise_POS"
-            echo "Host: $(hostname)"
-            echo "User: $(whoami)"
-            echo "Current working directory: $(pwd)"
-            echo "Target deployment path: $DEPLOY_TARGET"
+            log "[DEBUG] Target path: $DEPLOY_TARGET"
 
-            # Verify target directory exists before proceeding
             if [ ! -d "$DEPLOY_TARGET" ]; then
-              echo "CRITICAL ERROR: The directory $DEPLOY_TARGET does not exist on the server."
-              echo "Please create the directory manually first to confirm isolation."
+              log "❌ ERROR: Target directory $DEPLOY_TARGET does not exist."
               exit 1
             fi
 
-            # Move into deployment directory safely
             cd "$DEPLOY_TARGET"
-            echo "Moved to: $(pwd)"
-
-            # Safety check: Ensure we are not in a dangerous system directory
             CURRENT_DIR="$(pwd)"
+            log "[DEBUG] Successfully moved to: $CURRENT_DIR"
+
             if [ "$CURRENT_DIR" = "/" ] || [ "$CURRENT_DIR" = "/home" ] || [ "$CURRENT_DIR" = "/root" ]; then
-              echo "CRITICAL SAFETY ERROR: Attempted deployment to a protected system directory ($CURRENT_DIR)."
+              log "❌ CRITICAL SAFETY ERROR: Attempted deployment to protected directory: $CURRENT_DIR"
               exit 1
             fi
 
-            # --- 2. ENVIRONMENT PROTECTION ---
-
-            # Create a timestamped backup of the .env file before any git operations
+            # --- STEP 2: ENVIRONMENT PROTECTION ---
+            log "[STEP 2] Protecting environment files..."
             if [ -f ".env" ]; then
               TIMESTAMP=$(date +%Y%m%d%H%M%S)
-              echo "Backing up existing .env to .env.backup.$TIMESTAMP"
+              log "[DEBUG] Backing up .env to .env.backup.$TIMESTAMP"
               cp .env ".env.backup.$TIMESTAMP"
             else
-              echo "NOTICE: No existing .env file found in target path."
+              log "[DEBUG] No existing .env file found to backup."
             fi
 
-            # --- 3. REPOSITORY MANAGEMENT ---
+            # --- STEP 3: REPOSITORY SYNC ---
+            log "[STEP 3] Synchronizing repository code..."
+            
             if [ ! -d ".git" ]; then
-              echo "Initializing new repository in $DEPLOY_TARGET..."
+              log "[DEBUG] No .git found. Initializing new repository..."
               git init
               git remote add origin https://github.com/Alphred-OB/JAK_Enterprise_POS.git
-              git fetch
+              log "[DEBUG] Fetching from origin..."
+              git fetch origin main
+              log "[DEBUG] Checking out main branch..."
               git checkout -t origin/main -f
             else
-              echo "Existing repository detected. Syncing with origin/main..."
+              log "[DEBUG] .git found. Syncing with latest code..."
               git fetch origin main
               git reset --hard origin/main
             fi
+            log "✅ Repository sync complete."
 
-            # --- 4. POST-DEPLOYMENT TASKS ---
-            
-            echo "Installing Composer dependencies..."
-            composer install --no-dev --optimize-autoloader --no-interaction
+            # --- STEP 4: PRODUCTION BUILD ---
+            log "[STEP 4] Installing dependencies and building assets..."
 
-            echo "Installing NPM dependencies and building assets..."
-            npm install && npm run build
+            if command -v composer >/dev/null 2>&1; then
+                log "[DEBUG] Running 'composer install'..."
+                composer install --no-dev --optimize-autoloader --no-interaction
+            else
+                log "⚠️ Skipping 'composer install' (command not found)"
+            fi
 
-            echo "Running Database Migrations..."
+            if command -v npm >/dev/null 2>&1; then
+                log "[DEBUG] Running 'npm install'..."
+                npm install
+                log "[DEBUG] Running 'npm run build'..."
+                npm run build
+            else
+                log "⚠️ Skipping 'npm build' (npm command not found)"
+            fi
+
+            # --- STEP 5: APPLICATION OPTIMIZATION ---
+            log "[STEP 5] Finalizing application state..."
+
+            log "[DEBUG] Running database migrations..."
             php artisan migrate --force
 
-            echo "Clearing and Rebuilding Caches..."
+            log "[DEBUG] Optimizing Laravel caches..."
             php artisan optimize
             php artisan view:cache
             php artisan event:cache
 
-            echo "--- DEPLOYMENT SUCCESSFUL ---"
-            echo "JAK_Enterprise_POS has been deployed to $DEPLOY_TARGET"
+            log "✅ [SUCCESS] Deployment finished successfully."
