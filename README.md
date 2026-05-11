@@ -1,4 +1,5 @@
 # JAK POS System
+<!-- Deployment verified: 2026-05-11 -->
 
 A high-performance, offline-first Point of Sale (POS) and Inventory Management web application designed specifically for retail and wholesale businesses handling fast-moving consumer goods.
 
