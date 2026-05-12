@@ -34,10 +34,15 @@
     </style>
 </head>
 <body @if(!request('preview')) onload="window.print()" @endif>
+    @php $settings = \App\Models\Setting::first(); @endphp
     <div class="header text-center">
-        <div class="business-name">JAK POS ENTERPRISE</div>
-        <div>Tissues, Diapers & Disposables</div>
-        <div>Accra, Ghana | +233 00 000 0000</div>
+        <div class="business-name">{{ $settings->shop_name ?? 'JAK POS' }}</div>
+        @if($settings->shop_address)
+            <div style="font-size: 10px;">{{ $settings->shop_address }}</div>
+        @endif
+        @if($settings->shop_phone)
+            <div style="font-size: 10px;">{{ $settings->shop_phone }}</div>
+        @endif
     </div>
 
     <div class="divider"></div>
@@ -74,17 +79,17 @@
     <div class="totals">
         <div class="totals-row">
             <span>Subtotal:</span>
-            <span>GH₵ {{ number_format($sale->subtotal, 2) }}</span>
+            <span>{{ $settings->currency_symbol ?? 'GH₵' }} {{ number_format($sale->subtotal, 2) }}</span>
         </div>
         @if($sale->discount > 0)
         <div class="totals-row">
             <span>Discount:</span>
-            <span>-GH₵ {{ number_format($sale->discount, 2) }}</span>
+            <span>-{{ $settings->currency_symbol ?? 'GH₵' }} {{ number_format($sale->discount, 2) }}</span>
         </div>
         @endif
         <div class="totals-row font-bold grand-total">
             <span>TOTAL:</span>
-            <span>GH₵ {{ number_format($sale->total, 2) }}</span>
+            <span>{{ $settings->currency_symbol ?? 'GH₵' }} {{ number_format($sale->total, 2) }}</span>
         </div>
     </div>
 
@@ -95,9 +100,13 @@
     </div>
 
     <div class="footer text-center">
-        <div>THANK YOU FOR YOUR BUSINESS</div>
-        <div>Items sold are not returnable</div>
-        <div>Software by JAK Solutions</div>
+        @if($settings->receipt_footer)
+            {!! nl2br(e($settings->receipt_footer)) !!}
+        @else
+            <div>THANK YOU FOR YOUR BUSINESS</div>
+            <div>Items sold are not returnable</div>
+        @endif
+        <div style="margin-top: 5px; opacity: 0.7;">Software by JAK Solutions</div>
         <div style="margin-top: 10px;">
             *** CUSTOMER COPY ***
         </div>

@@ -22,11 +22,12 @@ class SettingController extends Controller
             'shop_address' => 'nullable|string|max:255',
             'shop_phone' => 'nullable|string|max:20',
             'currency_symbol' => 'required|string|max:10',
+            'receipt_footer' => 'nullable|string|max:1000',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $settings = Setting::first();
-        $data = $request->only(['shop_name', 'shop_address', 'shop_phone', 'currency_symbol']);
+        $data = $request->only(['shop_name', 'shop_address', 'shop_phone', 'currency_symbol', 'receipt_footer']);
 
         if ($request->hasFile('logo')) {
             // Delete old logo

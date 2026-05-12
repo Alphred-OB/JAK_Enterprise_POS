@@ -72,7 +72,12 @@
 
                         <div>
                             <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Business Address</label>
-                            <textarea name="shop_address" rows="3" class="w-full bg-slate-50 border-transparent rounded-[24px] py-5 px-8 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-slate-900">{{ $settings->shop_address }}</textarea>
+                            <textarea name="shop_address" rows="2" class="w-full bg-slate-50 border-transparent rounded-[24px] py-5 px-8 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-slate-900">{{ $settings->shop_address }}</textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Receipt Footer Note</label>
+                            <textarea name="receipt_footer" rows="3" placeholder="e.g. Items sold are not returnable. Thank you!" class="w-full bg-slate-50 border-transparent rounded-[24px] py-5 px-8 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-slate-900 text-sm leading-relaxed">{{ $settings->receipt_footer }}</textarea>
                         </div>
                     </div>
 
