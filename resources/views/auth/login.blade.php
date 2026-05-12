@@ -54,10 +54,10 @@
                     @if($settings->shop_logo)
                         <img src="{{ asset('storage/' . $settings->shop_logo) }}" 
                              class="w-24 h-24 object-contain rounded-2xl shadow-xl shadow-slate-200 mx-auto transition-all duration-700"
-                             :class="loading ? 'scale-110 rotate-[360deg]' : 'hover:scale-105'">
+                             :class="loading ? 'scale-110' : 'hover:scale-105'">
                     @else
-                        <div class="w-20 h-20 bg-blue-600 rounded-2xl flex items-center justify-center shadow-2xl shadow-blue-100 mx-auto rotate-3 transition-all duration-700"
-                             :class="loading ? 'scale-110 rotate-[360deg]' : 'hover:rotate-0'">
+                        <div class="w-20 h-20 bg-blue-600 rounded-2xl flex items-center justify-center shadow-2xl shadow-blue-100 mx-auto transition-all duration-700"
+                             :class="loading ? 'scale-110' : 'hover:scale-105'">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                             </svg>
