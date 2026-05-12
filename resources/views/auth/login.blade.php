@@ -108,8 +108,8 @@
                         <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">ID / Email Address</label>
                         <div class="relative group">
                             <input type="email" name="email" value="{{ old('email') }}" required autofocus
-                                   class="w-full bg-slate-50 border-2 border-transparent rounded-2xl py-4 pl-12 pr-4 focus:ring-0 focus:border-blue-600 focus:bg-white transition-all text-sm font-bold text-slate-900 disabled:opacity-50"
-                                   placeholder="cashier@jakpos.com" :disabled="loading">
+                                   class="w-full bg-slate-50 border-2 border-transparent rounded-2xl py-4 pl-12 pr-4 focus:ring-0 focus:border-blue-600 focus:bg-white transition-all text-sm font-bold text-slate-900"
+                                   placeholder="cashier@jakpos.com">
                             <div class="absolute left-4 top-4 text-slate-400 group-focus-within:text-blue-600 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -122,8 +122,8 @@
                         <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Secure Password</label>
                         <div class="relative group">
                             <input :type="showPassword ? 'text' : 'password'" name="password" required
-                                   class="w-full bg-slate-50 border-2 border-transparent rounded-2xl py-4 pl-12 pr-12 focus:ring-0 focus:border-blue-600 focus:bg-white transition-all text-sm font-bold text-slate-900 disabled:opacity-50"
-                                   placeholder="••••••••" :disabled="loading">
+                                   class="w-full bg-slate-50 border-2 border-transparent rounded-2xl py-4 pl-12 pr-12 focus:ring-0 focus:border-blue-600 focus:bg-white transition-all text-sm font-bold text-slate-900"
+                                   placeholder="••••••••">
                             <div class="absolute left-4 top-4 text-slate-400 group-focus-within:text-blue-600 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
