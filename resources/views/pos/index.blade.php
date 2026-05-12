@@ -876,6 +876,11 @@ function posSystem() {
         openingCash: '',
         closingCash: '',
         shiftNotes: '',
+        sales: [], // Added missing sales array for history
+        supportForm: {
+            category: 'software',
+            description: ''
+        }, // Added missing supportForm object
 
         async init() {
             try {

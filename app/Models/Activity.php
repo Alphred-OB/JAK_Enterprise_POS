@@ -36,13 +36,19 @@ class Activity extends Model
 
     public static function log($action, $description, $metadata = null)
     {
-        return self::create([
-            'user_id' => auth()->id(),
-            'action' => $action,
-            'description' => $description,
-            'ip_address' => request()->ip(),
-            'user_agent' => request()->userAgent(),
-            'metadata' => $metadata
-        ]);
+        try {
+            return self::create([
+                'user_id' => auth()->id(),
+                'action' => $action,
+                'description' => $description,
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+                'metadata' => $metadata
+            ]);
+        } catch (\Exception $e) {
+            // Silently fail if DB is out of sync to keep the app alive
+            \Illuminate\Support\Facades\Log::warning("Activity Log Failed: " . $e->getMessage());
+            return null;
+        }
     }
 }
