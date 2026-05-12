@@ -1,7 +1,7 @@
 @extends('layouts.manager')
 
 @section('content')
-<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-20 lg:pt-8">
+<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-6 md:pt-8">
     <header class="mb-10 text-left">
         <h1 class="text-3xl font-black text-slate-900 tracking-tight">History Log</h1>
         <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-1">Full chronological record of all system activities</p>

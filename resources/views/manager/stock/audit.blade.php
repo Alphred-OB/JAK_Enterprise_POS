@@ -1,7 +1,7 @@
 @extends('layouts.manager')
 
 @section('content')
-<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-20 lg:pt-8">
+<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-6 md:pt-8">
     <header class="flex flex-col md:flex-row items-start md:items-center justify-between mb-10 gap-6">
         <div>
             <h1 class="text-3xl font-black text-slate-900 tracking-tight">Stock Audit</h1>

@@ -1,7 +1,7 @@
 @extends('layouts.manager')
 
 @section('content')
-<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-20 lg:pt-8 max-w-7xl mx-auto">
+<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-6 md:pt-8 max-w-7xl mx-auto">
     <!-- Header Section -->
     <header class="flex flex-col xl:flex-row items-start xl:items-center justify-between mb-10 gap-8">
         <div>

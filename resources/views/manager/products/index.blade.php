@@ -1,7 +1,7 @@
 @extends('layouts.manager')
 
 @section('content')
-<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-20 lg:pt-8" x-data="{ viewMode: 'table' }">
+<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-6 md:pt-8" x-data="{ viewMode: 'table' }">
     <header class="flex flex-col md:flex-row items-start md:items-center justify-between mb-10 gap-6">
         <div>
             <h1 class="text-3xl font-black text-slate-900 tracking-tight">Products & Stock</h1>
