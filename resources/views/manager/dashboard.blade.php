@@ -3,7 +3,7 @@
 @section('content')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<div class="min-h-screen bg-[#fafbfc] p-8">
+<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-20 lg:pt-8">
     <!-- Header: Simple & Clear -->
     <header class="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-6">
         <div>
@@ -18,35 +18,40 @@
         </div>
         <div class="flex flex-wrap items-center gap-3">
             <!-- Date Filter Form -->
-            <form action="{{ route('manager.dashboard') }}" method="GET" class="bg-white p-1.5 rounded-[20px] border border-slate-100 shadow-sm flex items-center gap-2">
-                <input type="date" name="start_date" value="{{ request('start_date', now()->format('Y-m-d')) }}" class="bg-slate-50 border-transparent rounded-xl py-2 px-4 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-[10px] uppercase">
-                <span class="text-slate-300 font-black text-[10px]">TO</span>
-                <input type="date" name="end_date" value="{{ request('end_date', now()->format('Y-m-d')) }}" class="bg-slate-50 border-transparent rounded-xl py-2 px-4 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-[10px] uppercase">
-                <button type="submit" class="w-10 h-10 flex items-center justify-center bg-slate-900 text-white rounded-xl hover:bg-blue-600 transition-all shadow-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                </button>
-                <div x-data="{ open: false }" class="relative">
-                    <button type="button" @click="open = !open" @click.away="open = false" class="h-10 px-4 flex items-center gap-2 bg-slate-900 text-white rounded-xl hover:bg-blue-600 transition-all shadow-sm text-[10px] font-black uppercase tracking-widest">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                        Export Data
+            <form action="{{ route('manager.dashboard') }}" method="GET" class="w-full md:w-auto bg-white p-1.5 rounded-[20px] border border-slate-100 shadow-sm flex flex-wrap items-center gap-2">
+                <div class="flex flex-1 items-center gap-2 min-w-[200px]">
+                    <input type="date" name="start_date" value="{{ request('start_date', now()->format('Y-m-d')) }}" class="flex-1 bg-slate-50 border-transparent rounded-xl py-2 px-4 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-[10px] uppercase">
+                    <span class="text-slate-300 font-black text-[10px]">TO</span>
+                    <input type="date" name="end_date" value="{{ request('end_date', now()->format('Y-m-d')) }}" class="flex-1 bg-slate-50 border-transparent rounded-xl py-2 px-4 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-[10px] uppercase">
+                </div>
+                <div class="flex items-center gap-2 w-full md:w-auto">
+                    <button type="submit" class="flex-1 md:w-10 h-10 flex items-center justify-center bg-slate-900 text-white rounded-xl hover:bg-blue-600 transition-all shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                     </button>
-                    
-                    <div x-show="open" x-transition.opacity class="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-xl shadow-slate-200 border border-slate-100 overflow-hidden z-50 p-2" style="display: none;">
-                        <div class="text-[9px] font-black text-slate-400 uppercase tracking-widest px-3 py-2 mb-1">Downloads</div>
-                        <a href="{{ route('manager.report', request()->all()) }}" target="_blank" class="block px-3 py-2 text-xs font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all">
-                            PDF Summary Report
-                        </a>
-                        <a href="{{ route('manager.export.sales', request()->all()) }}" class="block px-3 py-2 text-xs font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all">
-                            Sales (CSV)
-                        </a>
-                        <a href="{{ route('manager.export.expenses', request()->all()) }}" class="block px-3 py-2 text-xs font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all">
-                            Expenses (CSV)
-                        </a>
+                    <div x-data="{ open: false }" class="relative flex-1 md:flex-none">
+                        <button type="button" @click="open = !open" @click.away="open = false" class="w-full h-10 px-4 flex items-center justify-center gap-2 bg-slate-900 text-white rounded-xl hover:bg-blue-600 transition-all shadow-sm text-[10px] font-black uppercase tracking-widest">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                            <span class="hidden sm:inline">Export Data</span>
+                            <span class="sm:hidden">Export</span>
+                        </button>
+                        
+                        <div x-show="open" x-transition.opacity class="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-xl shadow-slate-200 border border-slate-100 overflow-hidden z-50 p-2" style="display: none;">
+                            <div class="text-[9px] font-black text-slate-400 uppercase tracking-widest px-3 py-2 mb-1">Downloads</div>
+                            <a href="{{ route('manager.report', request()->all()) }}" target="_blank" class="block px-3 py-2 text-xs font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all">
+                                PDF Summary Report
+                            </a>
+                            <a href="{{ route('manager.export.sales', request()->all()) }}" class="block px-3 py-2 text-xs font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all">
+                                Sales (CSV)
+                            </a>
+                            <a href="{{ route('manager.export.expenses', request()->all()) }}" class="block px-3 py-2 text-xs font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all">
+                                Expenses (CSV)
+                            </a>
+                        </div>
                     </div>
                 </div>
             </form>
 
-            <a href="{{ route('pos.index') }}" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-200 active:scale-95 flex items-center gap-3">
+            <a href="{{ route('pos.index') }}" class="w-full md:w-auto bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-200 active:scale-95 flex items-center justify-center gap-3">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                 Open Cashier
             </a>

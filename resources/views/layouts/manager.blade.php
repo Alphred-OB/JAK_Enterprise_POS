@@ -41,10 +41,37 @@
         }
     </style>
 </head>
-<body class="bg-[#fafbfc] text-slate-900 overflow-x-hidden">
+<body class="bg-[#fafbfc] text-slate-900 overflow-x-hidden" x-data="{ sidebarOpen: false }">
     <div class="flex min-h-screen">
+        <!-- Mobile Navigation Bar -->
+        <div class="lg:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-slate-100 flex items-center justify-between px-6 z-[60]">
+            <div class="flex items-center gap-3">
+                @if($settings->shop_logo)
+                    <img src="{{ asset('storage/' . $settings->shop_logo) }}" class="w-8 h-8 object-contain rounded-lg">
+                @else
+                    <div class="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-black text-xs">{{ substr($settings->shop_name, 0, 1) }}</span>
+                    </div>
+                @endif
+                <h2 class="text-sm font-black text-slate-900 tracking-tight">{{ $settings->shop_name }}</h2>
+            </div>
+            <button @click="sidebarOpen = true" class="p-2 text-slate-500 hover:text-slate-900 transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+            </button>
+        </div>
+
         <!-- SIDEBAR: The Command Nav -->
-        <aside class="w-80 bg-white border-r border-slate-100 flex flex-col fixed inset-y-0 left-0 z-50 overflow-y-auto scrollbar-hide">
+        <aside 
+            :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+            class="w-80 bg-white border-r border-slate-100 flex flex-col fixed inset-y-0 left-0 z-[70] overflow-y-auto scrollbar-hide lg:translate-x-0 transition-transform duration-300 ease-in-out shadow-2xl lg:shadow-none"
+        >
+            <!-- Mobile Close Button -->
+            <div class="lg:hidden absolute top-6 right-6">
+                <button @click="sidebarOpen = false" class="p-2 text-slate-400 hover:text-slate-900">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+
             <!-- Brand Logo -->
             <div class="p-8 mb-4">
                 <div class="flex items-center gap-3">
@@ -62,7 +89,7 @@
                 </div>
             </div>
 
-            <!-- Navigation Links -->
+            <!-- Navigation Links (Same as before) -->
             <nav class="flex-1 px-6 space-y-2">
                 @if(auth()->user()->role !== 'inventory_officer')
                 <div class="pb-4">
@@ -255,7 +282,7 @@
                 @endif
             </nav>
 
-            <!-- Bottom Profile / Logout & Issue Reporting -->
+            <!-- Bottom Profile / Logout & Issue Reporting (Same as before) -->
             <div x-data="{ reportIssueOpen: false }" class="p-6 border-t border-slate-50 bg-slate-50/50">
                 <div class="flex items-center gap-4 mb-6">
                     <div class="w-12 h-12 bg-white rounded-2xl shadow-sm border border-slate-100 flex items-center justify-center font-black text-slate-900">
@@ -280,7 +307,7 @@
                     </button>
                 </form>
 
-                <!-- Report Issue Modal -->
+                <!-- Report Issue Modal (Same as before) -->
                 <div x-show="reportIssueOpen" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center">
                     <div x-show="reportIssueOpen" x-transition.opacity class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" @click="reportIssueOpen = false"></div>
                     
@@ -330,7 +357,7 @@
         </aside>
 
         <!-- MAIN CONTENT AREA -->
-        <main class="flex-1 ml-80 min-h-screen">
+        <main class="flex-1 lg:ml-80 min-h-screen pt-16 lg:pt-0">
             @yield('content')
         </main>
     </div>

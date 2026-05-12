@@ -53,9 +53,9 @@
                 <select name="payment_method" class="w-full bg-slate-50 border-transparent rounded-xl py-3 px-4 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-xs uppercase appearance-none">
                     <option value="">All Methods</option>
                     <option value="cash" {{ request('payment_method') == 'cash' ? 'selected' : '' }}>Cash</option>
-                    <option value="momo" {{ request('payment_method') == 'momo' ? 'selected' : '' }}>Mobile Money</option>
-                    <option value="card" {{ request('payment_method') == 'card' ? 'selected' : '' }}>Bank Card</option>
-                    <option value="credit" {{ request('payment_method') == 'credit' ? 'selected' : '' }}>Store Credit</option>
+                    <option value="momo" {{ request('payment_method') == 'momo' ? 'selected' : '' }}>MoMo</option>
+                    <option value="card" {{ request('payment_method') == 'card' ? 'selected' : '' }}>Card</option>
+                    <option value="debt" {{ request('payment_method') == 'debt' ? 'selected' : '' }}>Debt</option>
                 </select>
             </div>
 
