@@ -965,7 +965,7 @@ function posSystem() {
                 this.showCloseShiftModal = true;
             } catch (error) {
                 if (error.response?.status === 401) {
-                    window.location.reload(); // Refresh to login page
+                    window.location.reload();
                     return;
                 }
                 alert('Could not fetch shift data. Please try again.');
@@ -973,10 +973,10 @@ function posSystem() {
                 this.isProcessing = false;
             }
         },
-        },
 
         async closeShift() {
             try {
+                this.isProcessing = true;
                 const response = await axios.post('/api/shifts/close', { 
                     closing_cash: this.closingCash,
                     notes: this.shiftNotes
@@ -988,6 +988,8 @@ function posSystem() {
                 }
             } catch (error) {
                 alert('Failed to close shift');
+            } finally {
+                this.isProcessing = false;
             }
         },
 
