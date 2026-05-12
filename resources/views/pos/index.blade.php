@@ -931,7 +931,9 @@ function posSystem() {
                     await this.checkShiftStatus();
                 }
             } catch (error) {
-                alert('Failed to open shift. Are you offline?');
+                const msg = error.response?.data?.message || 'Connection failed. Check your internet or session.';
+                alert('Shift Error: ' + msg);
+                console.error('Open shift failed:', error);
             }
         },
 
