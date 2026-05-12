@@ -5,7 +5,7 @@
 <div x-data="posSystem()" 
      @keydown.window.f1.prevent="$refs.searchInput.focus()"
      @keydown.window.ctrl.p.prevent="if(showSuccess) printReceipt()"
-     @keydown.window.escape="if(showSupport) showSupport = false; else cart = []"
+     @keydown.window.escape="showSupport = false; showShiftModal = false; showCloseShiftModal = false; showCartMobile = false"
      @keydown.window.enter="if(showSuccess) showSuccess = false; else if(cart.length > 0) checkout()"
      class="flex flex-col h-screen overflow-hidden bg-white relative" 
      x-init="init()"
@@ -956,18 +956,23 @@ function posSystem() {
                 return;
             }
             try {
-                // Fetch preview summary before closing
+                this.isProcessing = true;
                 const response = await axios.post('/api/shifts/close', { 
-                    closing_cash: 0, // Temp dummy
+                    closing_cash: 0,
                     preview: true 
                 });
-                if (response.data.success) {
-                    this.shiftSummary = response.data.summary;
-                }
+                this.shiftSummary = response.data.summary;
                 this.showCloseShiftModal = true;
             } catch (error) {
-                this.showCloseShiftModal = true;
+                if (error.response?.status === 401) {
+                    window.location.reload(); // Refresh to login page
+                    return;
+                }
+                alert('Could not fetch shift data. Please try again.');
+            } finally {
+                this.isProcessing = false;
             }
+        },
         },
 
         async closeShift() {
@@ -1006,7 +1011,7 @@ function posSystem() {
         },
 
         get subtotal() {
-            return this.cart.reduce((sum, item) => sum + (item.selling_price * item.qty), 0);
+            return this.cart.reduce((sum, item) => sum + (item.selling_price * item.quantity), 0);
         },
 
         get total() {
@@ -1016,9 +1021,17 @@ function posSystem() {
         addToCart(product) {
             const index = this.cart.findIndex(i => i.id === product.id);
             if (index > -1) {
-                this.cart[index].qty++;
+                this.cart[index].quantity++;
             } else {
-                this.cart.push({ ...product, qty: 1 });
+                this.cart.push({ ...product, quantity: 1 });
+            }
+        },
+
+        removeFromCart(index) {
+            if (this.cart[index].quantity > 1) {
+                this.cart[index].quantity--;
+            } else {
+                this.cart.splice(index, 1);
             }
         },
 
@@ -1068,8 +1081,8 @@ function posSystem() {
         },
 
         updateQty(index, delta) {
-            this.cart[index].qty += delta;
-            if (this.cart[index].qty < 1) this.removeFromCart(index);
+            this.cart[index].quantity += delta;
+            if (this.cart[index].quantity < 1) this.removeFromCart(index);
         },
 
 
@@ -1142,7 +1155,10 @@ function posSystem() {
             this.isProcessing = true;
 
             const salePayload = {
-                items: this.cart,
+                items: this.cart.map(item => ({
+                    ...item,
+                    qty: item.quantity // Map back to 'qty' for backend compatibility
+                })),
                 subtotal: this.subtotal,
                 discount: this.discount,
                 total: this.total,
@@ -1196,7 +1212,7 @@ function posSystem() {
             this.cart.forEach(item => {
                 const productIndex = this.products.findIndex(p => p.id === item.id);
                 if (productIndex > -1) {
-                    this.products[productIndex].stock_quantity -= item.qty;
+                    this.products[productIndex].stock_quantity -= item.quantity;
                 }
             });
 
