@@ -282,7 +282,7 @@
         <!-- Sidebar: Cart & Checkout -->
         <aside 
             :class="showCartMobile ? 'translate-y-0' : 'translate-y-full lg:translate-y-0'"
-            class="fixed inset-0 lg:relative lg:flex z-[100] lg:z-10 w-full lg:w-[420px] bg-white border-l border-slate-100 flex flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.02)] transition-transform duration-500 ease-out"
+            class="fixed inset-0 lg:static lg:inset-auto lg:flex z-[100] lg:z-10 w-full lg:w-[420px] bg-white border-l border-slate-100 flex flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.02)] transition-transform duration-500 ease-out"
         >
             <!-- Mobile Close Handle -->
             <div @click="showCartMobile = false" class="lg:hidden h-2 w-12 bg-slate-200 rounded-full mx-auto my-4 shrink-0"></div>
