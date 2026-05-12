@@ -878,9 +878,18 @@ function posSystem() {
         shiftNotes: '',
 
         async init() {
-            await axios.get('/sanctum/csrf-cookie');
-            await this.checkShiftStatus();
-            this.$nextTick(() => this.$refs.searchInput.focus());
+            try {
+                // Ensure CSRF is fresh for API calls
+                await axios.get('/sanctum/csrf-cookie');
+                await this.checkShiftStatus();
+            } catch (e) {
+                console.error("Initialization failed", e);
+                this.showShiftModal = true; // Fallback: allow them to try opening a shift
+            }
+            
+            this.$nextTick(() => {
+                if(this.$refs.searchInput) this.$refs.searchInput.focus();
+            });
 
             // Network Listeners
             window.addEventListener('online', () => {
@@ -890,11 +899,6 @@ function posSystem() {
             window.addEventListener('offline', () => {
                 this.isOffline = true;
             });
-
-            // Attempt sync on load if online
-            if (!this.isOffline) {
-                this.syncOfflineSales();
-            }
         },
 
         async checkShiftStatus() {
@@ -909,7 +913,13 @@ function posSystem() {
                 }
             } catch (error) {
                 console.error('Failed to check shift status:', error);
-                // If offline and we have a cached shift, we could use it, but for now we require online to open shift
+                // Fallback: If we can't reach the server, show the modal so they can try to open/reconnect
+                this.showShiftModal = true;
+                
+                if (error.response?.status === 401) {
+                    // Session might have expired or Sanctum config is wrong
+                    console.warn("Unauthorized API call. Check SANCTUM_STATEFUL_DOMAINS.");
+                }
             }
         },
 
