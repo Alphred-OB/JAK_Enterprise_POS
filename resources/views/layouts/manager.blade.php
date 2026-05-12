@@ -175,6 +175,15 @@
                     <span class="text-sm font-black uppercase tracking-tight">Record Expenses</span>
                 </a>
 
+                <div class="pt-8 pb-4">
+                    <span class="px-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Financial Intelligence</span>
+                </div>
+
+                <a href="{{ route('manager.report') }}" class="nav-link {{ request()->routeIs('manager.report') ? 'active' : '' }} flex items-center gap-4 px-4 py-4 rounded-2xl text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all group">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 10-8 0v2a2 2 0 002 2h4a2 2 0 002-2zm3-2a9 9 0 1118 0s-1 7-9 7-9-7-9-7z" /></svg>
+                    <span class="text-sm font-black uppercase tracking-tight">Business Summary</span>
+                </a>
+
                 @endif
 
                 @if(auth()->user()->role === 'admin')
