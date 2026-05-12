@@ -126,7 +126,11 @@
                         <span class="text-sm font-black uppercase tracking-tight">Stock Conflicts</span>
                     </div>
                     @php
-                        $unresolvedConflicts = \App\Models\SaleItem::where('status', 'conflict')->count();
+                        try {
+                            $unresolvedConflicts = \App\Models\SaleItem::where('status', 'conflict')->count();
+                        } catch (\Exception $e) {
+                            $unresolvedConflicts = 0;
+                        }
                     @endphp
                     @if($unresolvedConflicts > 0)
                         <div class="flex items-center justify-center">
