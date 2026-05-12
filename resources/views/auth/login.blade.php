@@ -7,8 +7,7 @@
     @if(isset($settings) && $settings->shop_logo)
         <link rel="icon" href="{{ asset('storage/' . $settings->shop_logo) }}">
     @endif
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json">

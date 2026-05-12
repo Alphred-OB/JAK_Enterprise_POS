@@ -12,50 +12,46 @@
      x-cloak>
     
     <!-- Header: Strategic Hierarchy -->
-    <header class="bg-white border-b border-slate-100 px-8 py-4 flex items-center justify-between z-20">
-        <div class="flex items-center gap-4">
+    <header class="bg-white border-b border-slate-100 px-4 lg:px-8 py-3 lg:py-4 flex items-center justify-between z-20 gap-4">
+        <div class="flex items-center gap-3 lg:gap-4 shrink-0">
             @if($settings->shop_logo)
-                <img src="{{ asset('storage/' . $settings->shop_logo) }}" class="w-12 h-12 object-contain rounded-xl shadow-lg shadow-slate-100">
+                <img src="{{ asset('storage/' . $settings->shop_logo) }}" class="w-10 h-10 lg:w-12 lg:h-12 object-contain rounded-xl shadow-lg shadow-slate-100">
             @else
-                <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-200 group cursor-pointer hover:rotate-6 transition-all duration-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div class="w-10 h-10 lg:w-12 lg:h-12 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-200 group cursor-pointer hover:rotate-6 transition-all duration-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 lg:h-6 lg:w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
                 </div>
             @endif
-            <div>
-                <h1 class="text-xl font-black tracking-tight text-slate-900 leading-none">{{ $settings->shop_name ?? 'JAK POS' }}</h1>
+            <div class="hidden sm:block">
+                <h1 class="text-lg lg:text-xl font-black tracking-tight text-slate-900 leading-none">{{ $settings->shop_name ?? 'JAK POS' }}</h1>
                 <template x-if="currentShift">
                     <div class="flex items-center gap-2 mt-1.5">
-                        <span class="text-[9px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded-full" x-text="'SHIFT: ' + currentShift.opened_at_formatted"></span>
-                        <button @click="openCloseShiftModal()" class="text-[9px] font-black text-red-500 uppercase tracking-widest hover:underline">Close Shift</button>
+                        <span class="text-[8px] lg:text-[9px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded-full" x-text="'SHIFT: ' + currentShift.opened_at_formatted"></span>
                     </div>
-                </template>
-                <template x-if="!currentShift">
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">No Active Shift</p>
                 </template>
             </div>
         </div>
 
-        <div class="flex-1 max-w-2xl mx-12">
+        <div class="flex-1 max-w-2xl lg:mx-12">
             <div class="relative group">
                 <input 
                     type="text" 
                     x-model="search" 
                     x-ref="searchInput"
-                    placeholder="Search name, SKU, or Scan Barcode (F1)..." 
-                    class="w-full bg-slate-50 border-2 border-transparent rounded-2xl py-3.5 pl-12 pr-4 focus:ring-0 focus:border-blue-600 focus:bg-white transition-all text-sm font-bold"
+                    placeholder="Search (F1)..." 
+                    class="w-full bg-slate-50 border-2 border-transparent rounded-xl lg:rounded-2xl py-2 lg:py-3.5 pl-10 lg:pl-12 pr-4 focus:ring-0 focus:border-blue-600 focus:bg-white transition-all text-sm font-bold"
                 >
-                <div class="absolute left-4 top-4 text-slate-400 group-focus-within:text-blue-600 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div class="absolute left-3 lg:left-4 top-2.5 lg:top-4 text-slate-400 group-focus-within:text-blue-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 lg:h-5 lg:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </div>
             </div>
         </div>
 
-        <div class="flex items-center gap-6">
-            <div class="flex flex-col items-end">
+        <div class="flex items-center gap-3 lg:gap-6 shrink-0">
+            <div class="hidden md:flex flex-col items-end">
                 <span class="text-sm font-black text-slate-900">{{ auth()->user()->name ?? 'Cashier #01' }}</span>
                 <div class="flex items-center gap-1.5" :class="isOffline ? 'text-amber-500' : 'text-slate-400'">
                     <span class="w-1.5 h-1.5 rounded-full" :class="isOffline ? 'bg-amber-500' : 'bg-green-500 animate-pulse'"></span>
@@ -63,7 +59,7 @@
                 </div>
             </div>
             <div x-data="{ open: false }" class="relative">
-                <button @click="open = !open" @click.away="open = false" class="w-11 h-11 flex items-center justify-center rounded-2xl border border-slate-100 hover:bg-slate-50 transition-all group shadow-sm">
+                <button @click="open = !open" @click.away="open = false" class="w-10 h-10 lg:w-11 lg:h-11 flex items-center justify-center rounded-xl lg:rounded-2xl border border-slate-100 hover:bg-slate-50 transition-all group shadow-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-500 group-hover:text-slate-900 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
@@ -186,7 +182,12 @@
                     >
                         <div class="aspect-[5/4] bg-slate-50 flex items-center justify-center text-slate-300 group-hover:bg-blue-50/50 transition-colors relative overflow-hidden">
                             <template x-if="product.image_path">
-                                <img :src="'/storage/' + product.image_path" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                <img :src="'/storage/' + product.image_path" 
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                <div style="display:none" class="w-full h-full flex items-center justify-center bg-slate-50">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-slate-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+                                </div>
                             </template>
                             <template x-if="!product.image_path">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 opacity-30 group-hover:scale-110 transition-transform duration-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -232,7 +233,9 @@
                     >
                         <div class="w-16 h-16 bg-slate-50 rounded-xl flex items-center justify-center text-slate-300 group-hover:bg-blue-50 transition-colors overflow-hidden shrink-0">
                             <template x-if="product.image_path">
-                                <img :src="'/storage/' + product.image_path" class="w-full h-full object-cover">
+                                <img :src="'/storage/' + product.image_path" 
+                                     onerror="this.style.display='none'; this.parentElement.innerHTML='<svg class=\'h-8 w-8 text-slate-200\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'currentColor\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1.5\' d=\'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4\' /></svg>'"
+                                     class="w-full h-full object-cover">
                             </template>
                             <template x-if="!product.image_path">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -270,7 +273,17 @@
         </section>
 
         <!-- Sidebar: Cart & Checkout -->
-        <aside class="w-[420px] bg-white border-l border-slate-100 flex flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.02)]">
+        <aside 
+            :class="showCartMobile ? 'fixed inset-0 z-40 bg-white flex flex-col' : 'hidden lg:flex lg:w-[420px] flex-col'"
+            class="bg-white border-l border-slate-100 shadow-[-20px_0_50px_rgba(0,0,0,0.02)] transition-all duration-300"
+        >
+            <!-- Mobile Close Button -->
+            <div class="lg:hidden p-4 flex items-center justify-between border-b border-slate-50">
+                <h2 class="text-xl font-black text-slate-900 tracking-tight">Active Order</h2>
+                <button @click="showCartMobile = false" class="p-2 text-slate-400 hover:text-slate-600 transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
             <!-- Header -->
             <div class="p-6 border-b border-slate-50 flex items-center justify-between">
                 <div>
@@ -455,6 +468,24 @@
                 </button>
             </div>
         </aside>
+        <!-- Mobile Cart FAB -->
+        <button 
+            @click="showCartMobile = true"
+            x-show="cart.length > 0 && !showCartMobile"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="translate-y-20 opacity-0"
+            x-transition:enter-end="translate-y-0 opacity-100"
+            class="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-6 py-4 rounded-2xl font-black uppercase tracking-widest shadow-2xl flex items-center gap-3 z-30 active:scale-95"
+        >
+            <div class="relative">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                <div class="absolute -top-2 -right-2 w-4 h-4 bg-blue-600 rounded-full flex items-center justify-center border-2 border-slate-900">
+                    <span class="text-[8px] leading-none" x-text="cart.length"></span>
+                </div>
+            </div>
+            <span>View Cart</span>
+            <span class="text-blue-400" x-text="formatCurrency(total)"></span>
+        </button>
     </main>
 
     <!-- Success Overlay -->
@@ -876,6 +907,7 @@ function posSystem() {
         openingCash: '',
         closingCash: '',
         shiftNotes: '',
+        showCartMobile: false, // Mobile cart visibility toggle
         sales: [], // Added missing sales array for history
         supportForm: {
             category: 'software',

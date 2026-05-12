@@ -34,6 +34,11 @@ self.addEventListener('fetch', event => {
     // Skip API calls completely so offline queuing can catch them
     if (url.pathname.startsWith('/api/')) return;
 
+    // Skip external tracking beacons/scripts to prevent Promise rejection errors
+    if (url.hostname.includes('cloudflareinsights.com') || url.hostname.includes('google-analytics.com')) {
+        return;
+    }
+
     // Cache First for Build Assets & Fonts
     if (url.pathname.startsWith('/build/assets/') || url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com') {
         event.respondWith(
