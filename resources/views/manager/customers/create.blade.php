@@ -1,14 +1,14 @@
 @extends('layouts.manager')
 
 @section('content')
-<div class="p-8 max-w-4xl mx-auto">
-    <header class="flex items-center gap-6 mb-10">
+<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-6 md:pt-8 max-w-4xl mx-auto">
+    <header class="flex flex-col md:flex-row items-start md:items-center gap-6 mb-10">
         <a href="{{ route('manager.customers.index') }}" class="w-12 h-12 bg-white border border-slate-100 rounded-2xl flex items-center justify-center text-slate-400 hover:text-slate-900 transition-all shadow-sm">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg>
         </a>
         <div>
-            <h1 class="text-3xl font-black text-slate-900 tracking-tight">Register Customer</h1>
-            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Add a new customer to your database</p>
+            <h1 class="text-3xl font-black text-slate-900 tracking-tight leading-none">Register Customer</h1>
+            <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-2">Add a new customer to your database</p>
         </div>
     </header>
 
@@ -43,9 +43,9 @@
             </div>
         </div>
 
-        <div class="flex items-center justify-end gap-4">
-            <a href="{{ route('manager.customers.index') }}" class="px-8 py-4 text-xs font-black text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-all">Cancel</a>
-            <button type="submit" class="bg-slate-900 text-white px-12 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-100 active:scale-95">Register Customer</button>
+        <div class="flex flex-col md:flex-row items-center justify-end gap-4">
+            <button type="submit" class="w-full md:w-auto bg-slate-900 text-white px-12 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-100 active:scale-95 order-1 md:order-2">Register Customer</button>
+            <a href="{{ route('manager.customers.index') }}" class="w-full md:w-auto text-center px-8 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-all order-2 md:order-1">Cancel</a>
         </div>
     </form>
 </div>

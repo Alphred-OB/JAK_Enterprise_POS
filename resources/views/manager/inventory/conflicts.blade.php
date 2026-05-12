@@ -1,10 +1,10 @@
 @extends('layouts.manager')
 
 @section('content')
-<div class="p-8">
-    <header class="mb-10">
-        <h1 class="text-4xl font-black text-slate-900 tracking-tight">Inventory Conflicts</h1>
-        <p class="text-sm font-bold text-slate-500 uppercase tracking-widest mt-1">Resolve stock discrepancies detected during offline syncs</p>
+<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-6 md:pt-8">
+    <header class="mb-10 text-left">
+        <h1 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-none">Inventory Conflicts</h1>
+        <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-2">Resolve stock discrepancies detected during offline syncs</p>
     </header>
 
     @if(session('success'))

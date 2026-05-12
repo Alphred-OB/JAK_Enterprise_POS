@@ -1,13 +1,13 @@
 @extends('layouts.manager')
 
 @section('content')
-<div class="p-8">
-    <header class="mb-10 flex items-center justify-between">
+<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-6 md:pt-8">
+    <header class="mb-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div>
-            <h1 class="text-3xl font-black text-red-600 tracking-tight uppercase">Flagged Actions</h1>
-            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">High-priority security alerts and suspicious activities</p>
+            <h1 class="text-3xl font-black text-red-600 tracking-tight uppercase leading-none">Flagged Actions</h1>
+            <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-2">High-priority security alerts and suspicious activities</p>
         </div>
-        <div class="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 rounded-full animate-pulse">
+        <div class="flex items-center gap-2 px-6 py-3 bg-red-50 text-red-600 rounded-full animate-pulse border border-red-100">
             <div class="w-2 h-2 bg-red-600 rounded-full"></div>
             <span class="text-[10px] font-black uppercase tracking-widest">Active Monitoring</span>
         </div>

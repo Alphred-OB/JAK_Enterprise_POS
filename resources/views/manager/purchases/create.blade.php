@@ -1,20 +1,21 @@
 @extends('layouts.manager')
 
 @section('content')
-<div class="min-h-screen bg-[#fafbfc] p-8" x-data="stockInForm()">
+<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-6 md:pt-8" x-data="stockInForm()">
     <div class="max-w-5xl mx-auto">
         <!-- Header -->
-        <header class="flex items-center justify-between mb-10">
+        <!-- Header -->
+        <header class="flex flex-col md:flex-row items-start md:items-center justify-between mb-10 gap-6">
             <div>
                 <a href="{{ route('manager.purchases.index') }}" class="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-all flex items-center gap-2 mb-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
                     Back to History
                 </a>
-                <h1 class="text-4xl font-black text-slate-900 tracking-tight">Record Stock-In</h1>
+                <h1 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-none">Record Delivery</h1>
             </div>
-            <div class="text-right">
-                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">Total Invoice Value</span>
-                <p class="text-3xl font-black text-slate-900 tabular tracking-tighter">{{ \App\Models\Setting::first()->currency_symbol ?? 'GH₵' }} <span x-text="formatCurrency(grandTotal)"></span></p>
+            <div class="bg-slate-900 text-white p-6 rounded-3xl w-full md:w-auto flex flex-row md:flex-col justify-between items-center md:items-end gap-4 shadow-xl shadow-slate-200">
+                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Invoice</span>
+                <p class="text-2xl md:text-3xl font-black tabular tracking-tighter">{{ \App\Models\Setting::first()->currency_symbol ?? 'GH₵' }} <span x-text="formatCurrency(grandTotal)"></span></p>
             </div>
         </header>
 
@@ -98,8 +99,8 @@
 
             <!-- Submit -->
             <div class="flex justify-end pt-4">
-                <button type="submit" :disabled="isSubmitting || items.length === 0" class="bg-slate-900 text-white px-12 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-blue-600 transition-all shadow-2xl shadow-slate-200 active:scale-95 disabled:opacity-50">
-                    <span x-text="isSubmitting ? 'Recording...' : 'Confirm Delivery & Update Stock'"></span>
+                <button type="submit" :disabled="isSubmitting || items.length === 0" class="w-full md:w-auto bg-slate-900 text-white px-12 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-blue-600 transition-all shadow-2xl shadow-slate-200 active:scale-95 disabled:opacity-50">
+                    <span x-text="isSubmitting ? 'Recording...' : 'Confirm Delivery'"></span>
                 </button>
             </div>
         </form>

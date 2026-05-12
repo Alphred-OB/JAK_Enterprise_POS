@@ -1,21 +1,21 @@
 @extends('layouts.manager')
 
 @section('content')
-<div class="p-8 max-w-5xl mx-auto">
-    <header class="flex items-center gap-6 mb-10">
+<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-6 md:pt-8 max-w-5xl mx-auto">
+    <header class="flex flex-col md:flex-row items-start md:items-center gap-6 mb-10">
         <a href="{{ route('manager.returns.index') }}" class="w-12 h-12 bg-white border border-slate-100 rounded-2xl flex items-center justify-center text-slate-400 hover:text-slate-900 transition-all shadow-sm">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg>
         </a>
         <div>
-            <h1 class="text-3xl font-black text-slate-900 tracking-tight">Process New Return</h1>
-            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Locate a sale and authorize an item return</p>
+            <h1 class="text-3xl font-black text-slate-900 tracking-tight leading-none">Process Return</h1>
+            <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-2">Locate a sale and authorize an item return</p>
         </div>
     </header>
 
     <!-- STEP 1: Search Sale -->
     <div class="bg-white rounded-[40px] p-10 border border-slate-100 shadow-sm mb-10">
-        <form action="{{ route('manager.returns.create') }}" method="GET" class="flex items-end gap-6">
-            <div class="flex-1 space-y-2">
+        <form action="{{ route('manager.returns.create') }}" method="GET" class="flex flex-col md:flex-row items-end gap-6">
+            <div class="w-full md:flex-1 space-y-2">
                 <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Receipt Number</label>
                 <div class="relative group">
                     <input type="text" name="receipt" value="{{ request('receipt') }}" required class="w-full bg-slate-50 border-transparent rounded-2xl py-4 pl-12 pr-6 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-black text-sm uppercase tracking-widest" placeholder="e.g. RCPT-123456">
@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" class="bg-slate-900 text-white px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-100 active:scale-95">Find Sale</button>
+            <button type="submit" class="w-full md:w-auto bg-slate-900 text-white px-10 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-100 active:scale-95">Find Sale</button>
         </form>
     </div>
 
@@ -54,18 +54,18 @@
                     <div class="grid grid-cols-1 gap-4">
                         @foreach($sale->items as $item)
                             <div x-data="{ open: false }" class="border border-slate-100 rounded-3xl p-6 hover:border-blue-200 transition-all">
-                                <div class="flex items-center justify-between">
+                                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                                     <div class="flex items-center gap-4">
                                         <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center font-black text-slate-400 uppercase">
                                             {{ substr($item->product->name ?? 'P', 0, 1) }}
                                         </div>
                                         <div>
-                                            <p class="text-sm font-black text-slate-900 uppercase tracking-tight">{{ $item->product->name ?? 'DELETED PRODUCT' }}</p>
-                                            <p class="text-[10px] font-bold text-slate-400 mt-0.5 uppercase tracking-widest">Purchased: {{ $item->qty }} x GH₵ {{ number_format($item->unit_price, 2) }}</p>
+                                            <p class="text-sm font-black text-slate-900 uppercase tracking-tight">{{ $item->product->name ?? 'DELETED' }}</p>
+                                            <p class="text-[10px] font-bold text-slate-400 mt-0.5 uppercase tracking-widest">{{ $item->qty }} units @ GH₵ {{ number_format($item->unit_price, 2) }}</p>
                                         </div>
                                     </div>
-                                    <button @click="open = !open" class="bg-blue-50 text-blue-600 px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all">
-                                        Return This Item
+                                    <button @click="open = !open" class="w-full sm:w-auto bg-blue-50 text-blue-600 px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all">
+                                        Return
                                     </button>
                                 </div>
 

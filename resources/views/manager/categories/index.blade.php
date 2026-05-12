@@ -1,20 +1,20 @@
 @extends('layouts.manager')
 
 @section('content')
-<div class="p-8" x-data="{ 
+<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-6 md:pt-8" x-data="{ 
     showAddModal: false, 
     showEditModal: false,
     editingCategory: { id: '', name: '', description: '' }
 }">
     <!-- Header -->
-    <header class="flex items-center justify-between mb-10">
+    <header class="flex flex-col md:flex-row items-start md:items-center justify-between mb-10 gap-6">
         <div>
-            <h1 class="text-4xl font-black text-slate-900 tracking-tight">Product Categories</h1>
-            <p class="text-sm font-bold text-slate-500 uppercase tracking-widest mt-1">Organize your shop inventory</p>
+            <h1 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-none">Categories</h1>
+            <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-2">Organize your shop inventory</p>
         </div>
-        <button @click="showAddModal = true" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-200 active:scale-95 flex items-center gap-3">
+        <button @click="showAddModal = true" class="w-full md:w-auto bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-200 active:scale-95 flex items-center justify-center gap-3">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4" /></svg>
-            Create New Category
+            Add Category
         </button>
     </header>
 
