@@ -28,6 +28,7 @@
                 <template x-if="currentShift">
                     <div class="flex items-center gap-2 mt-1.5">
                         <span class="text-[8px] lg:text-[9px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded-full" x-text="'SHIFT: ' + currentShift.opened_at_formatted"></span>
+                        <button @click="openCloseShiftModal()" class="text-[9px] font-black text-red-500 uppercase tracking-widest hover:underline">Close Shift</button>
                     </div>
                 </template>
             </div>
@@ -95,6 +96,18 @@
                             <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">View past receipts</p>
                         </div>
                     </button>
+
+                    <template x-if="currentShift">
+                        <button @click="openCloseShiftModal(); open = false" class="w-full flex items-center gap-3 px-4 py-3 hover:bg-slate-50 transition-colors text-left group">
+                            <div class="w-8 h-8 rounded-xl bg-red-50 text-red-500 flex items-center justify-center group-hover:bg-red-600 group-hover:text-white transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            </div>
+                            <div>
+                                <p class="text-xs font-black text-slate-900 tracking-wide uppercase">End Shift</p>
+                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Finalize day</p>
+                            </div>
+                        </button>
+                    </template>
 
                     @if(auth()->user()->role === 'manager' || auth()->user()->role === 'admin')
                     <div class="h-px bg-slate-100 my-1 mx-4"></div>
