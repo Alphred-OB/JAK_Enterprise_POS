@@ -1,35 +1,36 @@
 @extends('layouts.manager')
 
 @section('content')
-<div class="p-8">
-    <header class="mb-10">
+<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-20 lg:pt-8">
+    <header class="mb-10 text-left">
         <h1 class="text-3xl font-black text-slate-900 tracking-tight">History Log</h1>
-        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Full chronological record of all system activities</p>
+        <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-1">Full chronological record of all system activities</p>
     </header>
 
     <!-- Filter Bar -->
-    <div class="bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm mb-8">
-        <form action="{{ route('manager.activities.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-6 items-end">
-            <div>
-                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">From Date</label>
+    <!-- Filter Bar -->
+    <div class="bg-white rounded-[32px] p-6 md:p-8 border border-slate-100 shadow-sm mb-8">
+        <form action="{{ route('manager.activities.index') }}" method="GET" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
+            <div class="space-y-2">
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">From Date</label>
                 <input type="date" name="start_date" value="{{ request('start_date') }}" class="w-full bg-slate-50 border-transparent rounded-xl py-3 px-4 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-xs">
             </div>
-            <div>
-                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">To Date</label>
+            <div class="space-y-2">
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">To Date</label>
                 <input type="date" name="end_date" value="{{ request('end_date') }}" class="w-full bg-slate-50 border-transparent rounded-xl py-3 px-4 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-xs">
             </div>
-            <div>
-                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Filter by Staff</label>
-                <select name="user_id" class="w-full bg-slate-50 border-transparent rounded-xl py-3 px-4 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-xs">
+            <div class="space-y-2">
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Staff</label>
+                <select name="user_id" class="w-full bg-slate-50 border-transparent rounded-xl py-3 px-4 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-xs appearance-none">
                     <option value="">All Staff</option>
                     @foreach($users as $user)
                         <option value="{{ $user->id }}" {{ request('user_id') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                     @endforeach
                 </select>
             </div>
-            <div>
-                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Filter by Action</label>
-                <select name="action" class="w-full bg-slate-50 border-transparent rounded-xl py-3 px-4 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-xs">
+            <div class="space-y-2">
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Action</label>
+                <select name="action" class="w-full bg-slate-50 border-transparent rounded-xl py-3 px-4 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-xs appearance-none">
                     <option value="">All Actions</option>
                     @foreach($actionTypes as $type)
                         <option value="{{ $type }}" {{ request('action') == $type ? 'selected' : '' }}>{{ str_replace('_', ' ', $type) }}</option>
@@ -37,11 +38,11 @@
                 </select>
             </div>
             <div class="flex gap-2">
-                <button type="submit" class="flex-1 bg-slate-900 text-white py-3 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all active:scale-95">
+                <button type="submit" class="flex-1 bg-slate-900 text-white h-[46px] rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all active:scale-95 shadow-lg shadow-slate-200">
                     Filter
                 </button>
-                <a href="{{ route('manager.activities.index') }}" class="px-4 py-3 bg-slate-100 text-slate-400 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-200 transition-all flex items-center justify-center">
-                    Reset
+                <a href="{{ route('manager.activities.index') }}" class="w-[46px] h-[46px] bg-slate-100 text-slate-400 rounded-xl hover:bg-slate-200 transition-all flex items-center justify-center" title="Reset Filters">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
                 </a>
             </div>
         </form>

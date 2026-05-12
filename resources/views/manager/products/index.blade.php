@@ -1,15 +1,15 @@
 @extends('layouts.manager')
 
 @section('content')
-<div class="p-8" x-data="{ viewMode: 'table' }">
+<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-20 lg:pt-8" x-data="{ viewMode: 'table' }">
     <header class="flex flex-col md:flex-row items-start md:items-center justify-between mb-10 gap-6">
         <div>
             <h1 class="text-3xl font-black text-slate-900 tracking-tight">Products & Stock</h1>
             <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Manage your items, prices, and stock levels</p>
         </div>
-        <div class="flex flex-wrap items-center gap-4">
+        <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
             <!-- View Switcher -->
-            <div class="bg-white p-1 rounded-2xl border border-slate-100 shadow-sm flex items-center">
+            <div class="bg-white p-1 rounded-2xl border border-slate-100 shadow-sm flex items-center shrink-0">
                 <button @click="viewMode = 'table'" :class="viewMode === 'table' ? 'bg-slate-900 text-white shadow-lg shadow-slate-200' : 'text-slate-400 hover:text-slate-600'" class="p-3 rounded-xl transition-all">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" /></svg>
                 </button>
@@ -18,18 +18,21 @@
                 </button>
             </div>
 
-            <div class="bg-white px-6 py-3 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3">
-                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Items</span>
+            <div class="hidden sm:flex bg-white px-6 py-3 rounded-2xl border border-slate-100 shadow-sm items-center gap-3">
+                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Items</span>
                 <span class="text-xs font-black text-slate-900">{{ $products->total() }}</span>
             </div>
-            <a href="{{ route('manager.export.products') }}" class="bg-white text-slate-600 px-6 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-slate-50 transition-all border border-slate-100 flex items-center gap-3">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                Export CSV
-            </a>
-            <a href="{{ route('manager.products.create') }}" class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-100 active:scale-95 flex items-center gap-3">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4" /></svg>
-                Add New Item
-            </a>
+
+            <div class="flex items-center gap-2 w-full sm:w-auto">
+                <a href="{{ route('manager.export.products') }}" class="flex-1 sm:flex-none bg-white text-slate-600 px-6 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition-all border border-slate-100 flex items-center justify-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                    Export
+                </a>
+                <a href="{{ route('manager.products.create') }}" class="flex-[2] sm:flex-none bg-blue-600 text-white px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-100 active:scale-95 flex items-center justify-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4" /></svg>
+                    Add Item
+                </a>
+            </div>
         </div>
     </header>
 

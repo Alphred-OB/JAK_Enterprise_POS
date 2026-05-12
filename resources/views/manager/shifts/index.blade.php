@@ -1,29 +1,31 @@
 @extends('layouts.manager')
 
 @section('content')
-<div class="p-8 max-w-7xl mx-auto">
+<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-20 lg:pt-8 max-w-7xl mx-auto">
     <!-- Header Section -->
-    <div class="flex items-center justify-between mb-8">
+    <header class="flex flex-col xl:flex-row items-start xl:items-center justify-between mb-10 gap-8">
         <div>
             <h1 class="text-3xl font-black text-slate-900 tracking-tight">Shift Reconciliations</h1>
-            <p class="text-sm font-bold text-slate-500 mt-1">Audit daily cashier shifts, verify cash drawers, and detect missing funds.</p>
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Audit daily cashier shifts, verify cash drawers, and detect missing funds.</p>
         </div>
         
-        <form action="" method="GET" class="flex gap-3">
-            <input type="date" name="date" value="{{ request('date') }}" class="bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm font-bold text-slate-700 focus:ring-0 focus:border-blue-500 shadow-sm">
-            <select name="status" class="bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm font-bold text-slate-700 focus:ring-0 focus:border-blue-500 shadow-sm">
+        <form action="" method="GET" class="flex flex-wrap items-center gap-3 w-full xl:w-auto">
+            <input type="date" name="date" value="{{ request('date') }}" class="flex-1 min-w-[140px] bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm font-bold text-slate-700 focus:ring-0 focus:border-blue-500 shadow-sm">
+            <select name="status" class="flex-1 min-w-[140px] bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm font-bold text-slate-700 focus:ring-0 focus:border-blue-500 shadow-sm uppercase text-[10px] tracking-widest">
                 <option value="">All Statuses</option>
                 <option value="open" {{ request('status') === 'open' ? 'selected' : '' }}>Open</option>
                 <option value="closed" {{ request('status') === 'closed' ? 'selected' : '' }}>Closed</option>
             </select>
-            <button type="submit" class="bg-slate-900 text-white px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-slate-800 transition-all shadow-lg shadow-slate-200">
-                Filter
-            </button>
-            @if(request()->hasAny(['date', 'status']))
-                <a href="{{ route('manager.shifts.index') }}" class="bg-slate-100 text-slate-500 px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-slate-200 transition-all">Clear</a>
-            @endif
+            <div class="flex items-center gap-2 w-full sm:w-auto">
+                <button type="submit" class="flex-1 sm:flex-none bg-slate-900 text-white px-8 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-800 transition-all shadow-lg shadow-slate-200">
+                    Filter
+                </button>
+                @if(request()->hasAny(['date', 'status']))
+                    <a href="{{ route('manager.shifts.index') }}" class="flex-1 sm:flex-none text-center bg-slate-100 text-slate-500 px-8 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-200 transition-all">Clear</a>
+                @endif
+            </div>
         </form>
-    </div>
+    </header>
 
     <!-- Shifts Table -->
     <div class="bg-white rounded-[32px] border border-slate-100 shadow-sm overflow-hidden">

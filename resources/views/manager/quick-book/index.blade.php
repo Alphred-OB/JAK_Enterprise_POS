@@ -1,22 +1,22 @@
 @extends('layouts.manager')
 
 @section('content')
-<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8">
+<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-20 lg:pt-8">
     <!-- Header -->
-    <header class="flex flex-col md:flex-row items-start md:items-center justify-between mb-10 gap-6">
+    <header class="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-10 gap-6">
         <div>
-            <h1 class="text-4xl font-black text-slate-900 tracking-tighter uppercase italic">Quick Book</h1>
+            <h1 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tighter uppercase italic">Quick Book</h1>
             <p class="text-[10px] font-black text-blue-600 uppercase tracking-[0.3em] mt-1">Real-Time Financial Sales Ledger</p>
         </div>
         
-        <div class="flex items-center gap-3">
-            <div class="bg-white px-6 py-3 rounded-2xl border border-slate-100 shadow-sm">
-                <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest block">Total Period Sales</span>
-                <span class="text-xl font-black text-slate-900 tabular">GH₵ {{ number_format($totalAmount, 2) }}</span>
+        <div class="flex items-center gap-3 w-full lg:w-auto">
+            <div class="flex-1 lg:flex-none bg-white px-6 py-3 rounded-2xl border border-slate-100 shadow-sm">
+                <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest block">Period Sales</span>
+                <span class="text-lg md:text-xl font-black text-slate-900 tabular">GH₵ {{ number_format($totalAmount, 2) }}</span>
             </div>
-            <div class="bg-slate-900 px-6 py-3 rounded-2xl shadow-xl shadow-slate-200">
+            <div class="flex-1 lg:flex-none bg-slate-900 px-6 py-3 rounded-2xl shadow-xl shadow-slate-200">
                 <span class="text-[9px] font-black text-slate-500 uppercase tracking-widest block">Transactions</span>
-                <span class="text-xl font-black text-white tabular">{{ $totalTransactions }}</span>
+                <span class="text-lg md:text-xl font-black text-white tabular">{{ $totalTransactions }}</span>
             </div>
         </div>
     </header>
