@@ -176,8 +176,13 @@
                 </a>
 
                 <div class="pt-8 pb-4">
-                    <span class="px-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Financial Intelligence</span>
+                    <span class="px-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Quick Book & Intel</span>
                 </div>
+
+                <a href="{{ route('manager.quick-book.index') }}" class="nav-link {{ request()->routeIs('manager.quick-book.index') ? 'active' : '' }} flex items-center gap-4 px-4 py-4 rounded-2xl text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all group">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                    <span class="text-sm font-black uppercase tracking-tight italic underline decoration-blue-600 decoration-2">Quick Book Ledger</span>
+                </a>
 
                 <a href="{{ route('manager.report') }}" class="nav-link {{ request()->routeIs('manager.report') ? 'active' : '' }} flex items-center gap-4 px-4 py-4 rounded-2xl text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all group">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 10-8 0v2a2 2 0 002 2h4a2 2 0 002-2zm3-2a9 9 0 1118 0s-1 7-9 7-9-7-9-7z" /></svg>

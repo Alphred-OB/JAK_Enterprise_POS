@@ -109,6 +109,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('inventory/conflicts', [\App\Http\Controllers\Manager\InventoryConflictController::class, 'index'])->name('manager.inventory.conflicts');
         Route::post('inventory/conflicts/{item}/resolve', [\App\Http\Controllers\Manager\InventoryConflictController::class, 'resolve'])->name('manager.inventory.resolve');
 
+        // Quick Book (Financial Ledger)
+        Route::get('quick-book', [\App\Http\Controllers\Manager\QuickBookController::class, 'index'])->name('manager.quick-book.index');
+
         // Shift Reconciliations
         Route::get('shifts', [\App\Http\Controllers\Manager\ShiftController::class, 'index'])->name('manager.shifts.index');
 
