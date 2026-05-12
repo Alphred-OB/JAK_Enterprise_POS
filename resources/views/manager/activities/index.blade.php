@@ -7,52 +7,43 @@
         <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-1">Full chronological record of all system activities</p>
     </header>
 
-    <!-- Filter Bar -->
+    <!-- Advanced Filters -->
     <div class="bg-white rounded-[32px] p-6 md:p-8 border border-slate-100 shadow-sm mb-8">
-        <form action="{{ route('manager.activities.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 items-end">
-            <div class="space-y-3">
-                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">From Date</label>
-                <input type="date" name="start_date" value="{{ request('start_date') }}" class="w-full bg-slate-50 border-transparent rounded-2xl py-4 px-6 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-xs shadow-sm">
+        <form action="{{ route('manager.activities.index') }}" method="GET" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 items-end">
+            <div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 ml-1">From Date</label>
+                <input type="date" name="start_date" value="{{ request('start_date') }}" class="w-full bg-slate-50 border-transparent rounded-2xl py-4 px-5 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-black text-xs appearance-none">
             </div>
-            <div class="space-y-3">
-                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">To Date</label>
-                <input type="date" name="end_date" value="{{ request('end_date') }}" class="w-full bg-slate-50 border-transparent rounded-2xl py-4 px-6 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-xs shadow-sm">
+            <div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 ml-1">To Date</label>
+                <input type="date" name="end_date" value="{{ request('end_date') }}" class="w-full bg-slate-50 border-transparent rounded-2xl py-4 px-5 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-black text-xs appearance-none">
             </div>
-            <div class="space-y-3">
-                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Staff Member</label>
-                <div class="relative">
-                    <select name="user_id" class="w-full bg-slate-50 border-transparent rounded-2xl py-4 pl-6 pr-10 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-xs shadow-sm appearance-none">
-                        <option value="">All Staff</option>
-                        @foreach($users as $user)
-                            <option value="{{ $user->id }}" {{ request('user_id') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
-                        @endforeach
-                    </select>
-                    <div class="absolute right-4 top-4 text-slate-400 pointer-events-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-                    </div>
-                </div>
+            <div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 ml-1">Filter by User</label>
+                <select name="user_id" class="w-full bg-slate-50 border-transparent rounded-2xl py-4 px-5 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-black text-xs appearance-none">
+                    <option value="">All Staff</option>
+                    @foreach($users as $user)
+                        <option value="{{ $user->id }}" {{ request('user_id') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                    @endforeach
+                </select>
             </div>
-            <div class="space-y-3">
-                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Action Type</label>
-                <div class="relative">
-                    <select name="action" class="w-full bg-slate-50 border-transparent rounded-2xl py-4 pl-6 pr-10 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-xs shadow-sm appearance-none">
-                        <option value="">All Actions</option>
-                        @foreach($actionTypes as $type)
-                            <option value="{{ $type }}" {{ request('action') == $type ? 'selected' : '' }}>{{ str_replace('_', ' ', $type) }}</option>
-                        @endforeach
-                    </select>
-                    <div class="absolute right-4 top-4 text-slate-400 pointer-events-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-                    </div>
-                </div>
+            <div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 ml-1">Action Category</label>
+                <select name="action" class="w-full bg-slate-50 border-transparent rounded-2xl py-4 px-5 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-black text-xs appearance-none">
+                    <option value="">All Actions</option>
+                    <option value="stock_adjusted" {{ request('action') == 'stock_adjusted' ? 'selected' : '' }}>Stock Adjustments</option>
+                    <option value="sale_cancelled" {{ request('action') == 'sale_cancelled' ? 'selected' : '' }}>Cancelled Sales</option>
+                    <option value="discount_applied" {{ request('action') == 'discount_applied' ? 'selected' : '' }}>Discounts Given</option>
+                    <option value="login" {{ request('action') == 'login' ? 'selected' : '' }}>Staff Logins</option>
+                </select>
             </div>
-            <div class="flex gap-3">
-                <button type="submit" class="flex-1 bg-slate-900 text-white h-[60px] rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all active:scale-95 shadow-xl shadow-slate-200">
-                    Apply Filters
-                </button>
-                <a href="{{ route('manager.activities.index') }}" class="w-[60px] h-[60px] bg-slate-100 text-slate-400 rounded-2xl hover:bg-slate-200 transition-all flex items-center justify-center shadow-inner" title="Reset Filters">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-                </a>
+            <div class="flex items-center gap-2">
+                <button type="submit" class="flex-1 bg-slate-900 text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all active:scale-95 shadow-xl shadow-slate-100">Filter Log</button>
+                @if(request()->anyFilled(['start_date', 'end_date', 'user_id', 'action']))
+                    <a href="{{ route('manager.activities.index') }}" class="p-4 bg-slate-50 text-slate-400 hover:text-red-600 rounded-2xl transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </a>
+                @endif
             </div>
         </form>
     </div>
@@ -61,10 +52,10 @@
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
                 <thead>
-                    <tr class="border-b border-slate-50">
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Time & Date</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">User</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Action</th>
+                    <tr class="border-b border-slate-50 bg-slate-50/10">
+                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Timestamp</th>
+                        <th class="hidden sm:table-cell px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Staff Member</th>
+                        <th class="hidden md:table-cell px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Action Type</th>
                         <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Description</th>
                     </tr>
                 </thead>
@@ -75,16 +66,16 @@
                                     <p class="text-sm font-black text-slate-900 tabular tracking-tighter">{{ $activity->created_at->format('d M, Y') }}</p>
                                     <p class="text-[10px] font-bold text-slate-400 uppercase">{{ $activity->created_at->format('h:i:s A') }}</p>
                                 </td>
-                                <td class="px-8 py-6">
+                                <td class="hidden sm:table-cell px-8 py-6">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center font-black text-[10px] text-slate-400">
+                                        <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center font-black text-[10px] text-slate-500">
                                             {{ substr($activity->user->name ?? 'S', 0, 1) }}
                                         </div>
                                         <p class="text-xs font-black text-slate-600 uppercase">{{ $activity->user->name ?? 'System' }}</p>
                                     </div>
                                 </td>
-                                <td class="px-8 py-6">
-                                    <span class="px-3 py-1 bg-slate-100 text-slate-600 text-[9px] font-black rounded-lg uppercase tracking-widest">
+                                <td class="hidden md:table-cell px-8 py-6">
+                                    <span class="px-3 py-1 bg-slate-50 text-slate-600 text-[9px] font-black rounded-lg uppercase tracking-widest border border-slate-100">
                                         {{ str_replace('_', ' ', $activity->action) }}
                                     </span>
                                 </td>

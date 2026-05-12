@@ -27,16 +27,16 @@
 
     <!-- Filters Bar -->
     <div class="bg-white rounded-[32px] p-6 border border-slate-100 shadow-sm mb-8">
-        <form action="{{ route('manager.suppliers.index') }}" method="GET" class="flex flex-wrap items-center gap-4">
-            <div class="flex-1 min-w-[300px] relative group">
+        <form action="{{ route('manager.suppliers.index') }}" method="GET" class="flex flex-col md:flex-row items-center gap-4">
+            <div class="w-full md:flex-1 relative group">
                 <input type="text" name="search" value="{{ request('search') }}" placeholder="Search company, contact person or phone..." class="w-full bg-slate-50 border-transparent rounded-2xl py-4 pl-12 pr-6 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-sm">
                 <div class="absolute left-4 top-4 text-slate-300 group-focus-within:text-blue-600 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                 </div>
             </div>
-            <button type="submit" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-600 transition-all">Search</button>
+            <button type="submit" class="w-full md:w-auto bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-600 transition-all">Search</button>
             @if(request('search'))
-                <a href="{{ route('manager.suppliers.index') }}" class="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-red-500 transition-all">Clear</a>
+                <a href="{{ route('manager.suppliers.index') }}" class="w-full md:w-auto text-center text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-red-500 transition-all">Clear</a>
             @endif
         </form>
     </div>
@@ -47,9 +47,9 @@
                 <thead>
                     <tr class="border-b border-slate-50">
                         <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Company / Name</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Contact Person</th>
+                        <th class="hidden md:table-cell px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Contact Person</th>
                         <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Phone</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Email</th>
+                        <th class="hidden sm:table-cell px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Email</th>
                         <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] text-right">Actions</th>
                     </tr>
                 </thead>
@@ -67,13 +67,13 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-8 py-6">
+                            <td class="hidden md:table-cell px-8 py-6">
                                 <p class="text-[11px] font-black text-slate-700 uppercase">{{ $supplier->contact_person ?? 'N/A' }}</p>
                             </td>
                             <td class="px-8 py-6">
                                 <p class="text-[11px] font-black text-slate-900 tabular">{{ $supplier->phone ?? 'N/A' }}</p>
                             </td>
-                            <td class="px-8 py-6">
+                            <td class="hidden sm:table-cell px-8 py-6">
                                 <p class="text-[11px] font-bold text-slate-400">{{ $supplier->email ?? 'N/A' }}</p>
                             </td>
                             <td class="px-8 py-6 text-right">

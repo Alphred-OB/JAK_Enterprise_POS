@@ -9,12 +9,12 @@
             <p class="text-[10px] font-black text-blue-600 uppercase tracking-[0.3em] mt-1">Real-Time Financial Sales Ledger</p>
         </div>
         
-        <div class="flex items-center gap-3 w-full lg:w-auto">
-            <div class="flex-1 lg:flex-none bg-white px-6 py-3 rounded-2xl border border-slate-100 shadow-sm">
+        <div class="grid grid-cols-2 lg:flex items-center gap-3 w-full lg:w-auto">
+            <div class="bg-white px-6 py-3 rounded-2xl border border-slate-100 shadow-sm">
                 <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest block">Period Sales</span>
                 <span class="text-lg md:text-xl font-black text-slate-900 tabular">GH₵ {{ number_format($totalAmount, 2) }}</span>
             </div>
-            <div class="flex-1 lg:flex-none bg-slate-900 px-6 py-3 rounded-2xl shadow-xl shadow-slate-200">
+            <div class="bg-slate-900 px-6 py-3 rounded-2xl shadow-xl shadow-slate-200">
                 <span class="text-[9px] font-black text-slate-500 uppercase tracking-widest block">Transactions</span>
                 <span class="text-lg md:text-xl font-black text-white tabular">{{ $totalTransactions }}</span>
             </div>
@@ -77,12 +77,12 @@
             <table class="w-full text-left">
                 <thead>
                     <tr class="bg-slate-50/50 border-b border-slate-50">
-                        <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Transaction ID</th>
+                        <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Ref ID</th>
                         <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Date & Time</th>
-                        <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Customer</th>
-                        <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Method</th>
-                        <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Staff</th>
-                        <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Total Amount</th>
+                        <th class="hidden md:table-cell px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Customer</th>
+                        <th class="hidden sm:table-cell px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Method</th>
+                        <th class="hidden lg:table-cell px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Staff</th>
+                        <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Amount</th>
                         <th class="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Action</th>
                     </tr>
                 </thead>
@@ -96,7 +96,7 @@
                             <p class="text-xs font-black text-slate-700">{{ $sale->created_at->format('d M, Y') }}</p>
                             <p class="text-[9px] font-bold text-slate-400 uppercase mt-0.5 tabular">{{ $sale->created_at->format('h:i A') }}</p>
                         </td>
-                        <td class="px-8 py-5">
+                        <td class="hidden md:table-cell px-8 py-5">
                             @if($sale->customer)
                                 <p class="text-xs font-black text-slate-900 uppercase">{{ $sale->customer->name }}</p>
                                 <p class="text-[9px] font-bold text-slate-400 tabular">{{ $sale->customer->phone }}</p>
@@ -104,13 +104,13 @@
                                 <span class="text-[10px] font-black text-slate-300 uppercase tracking-widest">Walk-in</span>
                             @endif
                         </td>
-                        <td class="px-8 py-5">
+                        <td class="hidden sm:table-cell px-8 py-5">
                             <span class="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest 
                                 {{ $sale->payment_method == 'cash' ? 'bg-green-50 text-green-600' : ($sale->payment_method == 'momo' ? 'bg-blue-50 text-blue-600' : 'bg-amber-50 text-amber-600') }}">
                                 {{ $sale->payment_method }}
                             </span>
                         </td>
-                        <td class="px-8 py-5">
+                        <td class="hidden lg:table-cell px-8 py-5">
                             <div class="flex items-center gap-2">
                                 <div class="w-6 h-6 rounded-lg bg-slate-100 flex items-center justify-center text-[9px] font-black text-slate-500 uppercase">
                                     {{ substr($sale->user->name, 0, 1) }}

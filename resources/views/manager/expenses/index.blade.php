@@ -32,9 +32,9 @@
                     <tr class="border-b border-slate-50">
                         <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Date</th>
                         <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Description</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Category</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Recorded By</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Amount (GH₵)</th>
+                        <th class="hidden sm:table-cell px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Category</th>
+                        <th class="hidden lg:table-cell px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Staff</th>
+                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Amount</th>
                         <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] text-right">Actions</th>
                     </tr>
                 </thead>
@@ -47,12 +47,12 @@
                             <td class="px-8 py-6">
                                 <p class="text-sm font-bold text-slate-600">{{ $expense->description }}</p>
                             </td>
-                            <td class="px-8 py-6">
+                            <td class="hidden sm:table-cell px-8 py-6">
                                 <span class="px-3 py-1 bg-blue-50 text-blue-600 text-[9px] font-black rounded-lg uppercase tracking-widest">
                                     {{ $expense->category }}
                                 </span>
                             </td>
-                            <td class="px-8 py-6">
+                            <td class="hidden lg:table-cell px-8 py-6">
                                 <p class="text-[10px] font-black text-slate-400 uppercase tracking-tight">{{ $expense->user->name ?? 'System' }}</p>
                             </td>
                             <td class="px-8 py-6">

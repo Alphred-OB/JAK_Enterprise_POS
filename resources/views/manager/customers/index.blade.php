@@ -23,23 +23,25 @@
 
     <!-- Filters Bar -->
     <div class="bg-white rounded-[32px] p-6 border border-slate-100 shadow-sm mb-8">
-        <form action="{{ route('manager.customers.index') }}" method="GET" class="flex flex-wrap items-center gap-4">
-            <div class="flex-1 min-w-[300px] relative group">
+        <form action="{{ route('manager.customers.index') }}" method="GET" class="flex flex-col md:flex-row items-center gap-4">
+            <div class="w-full md:flex-1 relative group">
                 <input type="text" name="search" value="{{ request('search') }}" placeholder="Search name, phone or email..." class="w-full bg-slate-50 border-transparent rounded-2xl py-4 pl-12 pr-6 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-sm">
                 <div class="absolute left-4 top-4 text-slate-300 group-focus-within:text-blue-600 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                 </div>
             </div>
 
-            <label class="flex items-center gap-3 bg-slate-50 px-6 py-4 rounded-2xl cursor-pointer hover:bg-slate-100 transition-all">
-                <input type="checkbox" name="has_debt" value="1" {{ request('has_debt') ? 'checked' : '' }} class="w-5 h-5 rounded-lg border-slate-200 text-red-600 focus:ring-red-600">
-                <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Show Debt Only</span>
-            </label>
+            <div class="flex items-center gap-4 w-full md:w-auto">
+                <label class="flex-1 md:flex-none flex items-center justify-center gap-3 bg-slate-50 px-6 py-4 rounded-2xl cursor-pointer hover:bg-slate-100 transition-all">
+                    <input type="checkbox" name="has_debt" value="1" {{ request('has_debt') ? 'checked' : '' }} class="w-5 h-5 rounded-lg border-slate-200 text-red-600 focus:ring-red-600">
+                    <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Debtors</span>
+                </label>
 
-            <button type="submit" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-600 transition-all">Filter</button>
+                <button type="submit" class="flex-1 md:flex-none bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-600 transition-all">Filter</button>
+            </div>
             
             @if(request('search') || request('has_debt'))
-                <a href="{{ route('manager.customers.index') }}" class="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-red-500 transition-all">Clear</a>
+                <a href="{{ route('manager.customers.index') }}" class="w-full md:w-auto text-center text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-red-500 transition-all">Clear</a>
             @endif
         </form>
     </div>
@@ -50,9 +52,9 @@
                 <thead>
                     <tr class="border-b border-slate-50">
                         <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Customer Name</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Contact Info</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Outstanding Debt</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Status</th>
+                        <th class="hidden md:table-cell px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Contact</th>
+                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Debt</th>
+                        <th class="hidden sm:table-cell px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Status</th>
                         <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] text-right">Actions</th>
                     </tr>
                 </thead>
@@ -70,7 +72,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-8 py-6">
+                            <td class="hidden md:table-cell px-8 py-6">
                                 <p class="text-[11px] font-black text-slate-700 tabular">{{ $customer->phone ?? 'N/A' }}</p>
                                 <p class="text-[10px] font-bold text-slate-400 lowercase mt-0.5">{{ $customer->email ?? 'N/A' }}</p>
                             </td>
@@ -80,11 +82,11 @@
                                         GH₵ {{ number_format($customer->total_debt, 2) }}
                                     </span>
                                     @if($customer->total_debt > 0)
-                                        <span class="text-[9px] font-black text-red-400 uppercase tracking-widest mt-0.5">Payment Pending</span>
+                                        <span class="text-[9px] font-black text-red-400 uppercase tracking-widest mt-0.5 sm:hidden">Overdue</span>
                                     @endif
                                 </div>
                             </td>
-                            <td class="px-8 py-6">
+                            <td class="hidden sm:table-cell px-8 py-6">
                                 <span class="px-3 py-1 {{ $customer->total_debt > 0 ? 'bg-amber-50 text-amber-600' : 'bg-green-50 text-green-600' }} text-[9px] font-black rounded-lg uppercase tracking-widest">
                                     {{ $customer->total_debt > 0 ? 'Overdue' : 'Good' }}
                                 </span>

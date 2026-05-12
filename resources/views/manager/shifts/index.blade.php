@@ -3,25 +3,27 @@
 @section('content')
 <div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-6 md:pt-8 max-w-7xl mx-auto">
     <!-- Header Section -->
-    <header class="flex flex-col xl:flex-row items-start xl:items-center justify-between mb-10 gap-8">
+    <header class="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-10 gap-8">
         <div>
-            <h1 class="text-3xl font-black text-slate-900 tracking-tight">Shift Reconciliations</h1>
-            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Audit daily cashier shifts, verify cash drawers, and detect missing funds.</p>
+            <h1 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-none">Shift Reconciliations</h1>
+            <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-2">Audit daily cashier shifts, verify drawers, and detect missing funds.</p>
         </div>
         
-        <form action="" method="GET" class="flex flex-wrap items-center gap-3 w-full xl:w-auto">
-            <input type="date" name="date" value="{{ request('date') }}" class="flex-1 min-w-[140px] bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm font-bold text-slate-700 focus:ring-0 focus:border-blue-500 shadow-sm">
-            <select name="status" class="flex-1 min-w-[140px] bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm font-bold text-slate-700 focus:ring-0 focus:border-blue-500 shadow-sm uppercase text-[10px] tracking-widest">
-                <option value="">All Statuses</option>
-                <option value="open" {{ request('status') === 'open' ? 'selected' : '' }}>Open</option>
-                <option value="closed" {{ request('status') === 'closed' ? 'selected' : '' }}>Closed</option>
-            </select>
-            <div class="flex items-center gap-2 w-full sm:w-auto">
-                <button type="submit" class="flex-1 sm:flex-none bg-slate-900 text-white px-8 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-800 transition-all shadow-lg shadow-slate-200">
+        <form action="" method="GET" class="flex flex-col md:flex-row items-center gap-3 w-full lg:w-auto">
+            <div class="grid grid-cols-2 gap-3 w-full md:w-auto">
+                <input type="date" name="date" value="{{ request('date') }}" class="bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm font-bold text-slate-700 focus:ring-0 focus:border-blue-500 shadow-sm">
+                <select name="status" class="bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm font-bold text-slate-700 focus:ring-0 focus:border-blue-500 shadow-sm uppercase text-[10px] tracking-widest appearance-none">
+                    <option value="">All Status</option>
+                    <option value="open" {{ request('status') === 'open' ? 'selected' : '' }}>Open</option>
+                    <option value="closed" {{ request('status') === 'closed' ? 'selected' : '' }}>Closed</option>
+                </select>
+            </div>
+            <div class="flex items-center gap-2 w-full md:w-auto">
+                <button type="submit" class="flex-1 md:flex-none bg-slate-900 text-white px-8 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-blue-600 transition-all shadow-lg shadow-slate-200">
                     Filter
                 </button>
                 @if(request()->hasAny(['date', 'status']))
-                    <a href="{{ route('manager.shifts.index') }}" class="flex-1 sm:flex-none text-center bg-slate-100 text-slate-500 px-8 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-200 transition-all">Clear</a>
+                    <a href="{{ route('manager.shifts.index') }}" class="flex-1 md:flex-none text-center bg-slate-100 text-slate-500 px-8 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-200 transition-all">Clear</a>
                 @endif
             </div>
         </form>
@@ -35,10 +37,10 @@
                     <tr class="bg-slate-50/50">
                         <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100">Shift / Date</th>
                         <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100">Cashier</th>
-                        <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100">Status</th>
-                        <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 text-right">Opening Cash</th>
-                        <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 text-right">Expected (Sales)</th>
-                        <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 text-right">Actual Counted</th>
+                        <th class="hidden sm:table-cell px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100">Status</th>
+                        <th class="hidden lg:table-cell px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 text-right">Opening</th>
+                        <th class="hidden md:table-cell px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 text-right">Expected</th>
+                        <th class="hidden md:table-cell px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 text-right">Counted</th>
                         <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 text-right">Discrepancy</th>
                     </tr>
                 </thead>
@@ -66,24 +68,24 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="px-6 py-5">
+                        <td class="hidden sm:table-cell px-6 py-5">
                             @if($shift->status === 'open')
                                 <span class="px-3 py-1 bg-emerald-50 text-emerald-600 rounded-lg text-[10px] font-black uppercase tracking-widest">Active</span>
                             @else
                                 <span class="px-3 py-1 bg-slate-100 text-slate-500 rounded-lg text-[10px] font-black uppercase tracking-widest">Closed</span>
                             @endif
                         </td>
-                        <td class="px-6 py-5 text-right">
+                        <td class="hidden lg:table-cell px-6 py-5 text-right">
                             <p class="text-sm font-black text-slate-600 tabular-nums">GH₵ {{ number_format($shift->opening_cash, 2) }}</p>
                         </td>
-                        <td class="px-6 py-5 text-right">
+                        <td class="hidden md:table-cell px-6 py-5 text-right">
                             @if($shift->status === 'closed')
                                 <p class="text-sm font-black text-slate-900 tabular-nums">GH₵ {{ number_format($shift->expected_cash, 2) }}</p>
                             @else
                                 <span class="text-slate-300">-</span>
                             @endif
                         </td>
-                        <td class="px-6 py-5 text-right">
+                        <td class="hidden md:table-cell px-6 py-5 text-right">
                             @if($shift->status === 'closed')
                                 <p class="text-sm font-black text-slate-900 tabular-nums">GH₵ {{ number_format($shift->closing_cash, 2) }}</p>
                             @else

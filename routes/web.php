@@ -116,7 +116,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('shifts', [\App\Http\Controllers\Manager\ShiftController::class, 'index'])->name('manager.shifts.index');
 
         // Reports
-        Route::get('report', [\App\Http\Controllers\Manager\ManagerDashboard::class, 'report'])->name('manager.report');
+        Route::get('report', [ManagerDashboard::class, 'report'])->name('manager.report');
 
         // Data Exports (CSV)
         Route::prefix('export')->group(function () {

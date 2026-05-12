@@ -13,18 +13,18 @@
     </header>
 
     <!-- STEP 1: Search Sale -->
-    <div class="bg-white rounded-[40px] p-10 border border-slate-100 shadow-sm mb-10">
+    <div class="bg-white rounded-[32px] p-6 md:p-10 border border-slate-100 shadow-sm mb-10">
         <form action="{{ route('manager.returns.create') }}" method="GET" class="flex flex-col md:flex-row items-end gap-6">
-            <div class="w-full md:flex-1 space-y-2">
+            <div class="w-full md:flex-1 space-y-3">
                 <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Receipt Number</label>
                 <div class="relative group">
-                    <input type="text" name="receipt" value="{{ request('receipt') }}" required class="w-full bg-slate-50 border-transparent rounded-2xl py-4 pl-12 pr-6 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-black text-sm uppercase tracking-widest" placeholder="e.g. RCPT-123456">
-                    <div class="absolute left-4 top-4 text-slate-300 group-focus-within:text-blue-600 transition-colors">
+                    <input type="text" name="receipt" value="{{ request('receipt') }}" required class="w-full bg-slate-50 border-transparent rounded-2xl py-5 pl-12 pr-6 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-black text-sm uppercase tracking-widest" placeholder="RCPT-XXXXXX">
+                    <div class="absolute left-4 top-5 text-slate-300 group-focus-within:text-blue-600 transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" /></svg>
                     </div>
                 </div>
             </div>
-            <button type="submit" class="w-full md:w-auto bg-slate-900 text-white px-10 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-100 active:scale-95">Find Sale</button>
+            <button type="submit" class="w-full md:w-auto bg-slate-900 text-white px-10 py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-100 active:scale-95">Find Sale</button>
         </form>
     </div>
 
