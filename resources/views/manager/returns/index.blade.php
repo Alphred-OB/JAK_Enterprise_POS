@@ -7,10 +7,12 @@
             <h1 class="text-3xl font-black text-slate-900 tracking-tight leading-none">Returns & Refunds</h1>
             <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-2">Audit and manage product returns and stock adjustments</p>
         </div>
-        <a href="{{ route('manager.returns.create') }}" class="w-full md:w-auto justify-center bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-200 active:scale-95 flex items-center gap-3">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M16 15v-1a4 4 0 00-4-4H8m0 0l3 3m-3-3l3-3" /></svg>
-            Process Return
-        </a>
+        <div class="flex flex-col sm:flex-row items-center gap-2 w-full md:w-auto">
+            <a href="{{ route('manager.returns.create') }}" class="w-full sm:flex-1 md:flex-none justify-center bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-200 active:scale-95 flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M16 15v-1a4 4 0 00-4-4H8m0 0l3 3m-3-3l3-3" /></svg>
+                Process Return
+            </a>
+        </div>
     </header>
 
     @if(session('success'))
@@ -28,10 +30,10 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                 </div>
             </div>
-            <div class="flex items-center gap-2 w-full md:w-auto">
-                <button type="submit" class="flex-1 md:flex-none bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all">Search</button>
+            <div class="flex flex-col sm:flex-row items-center gap-2 w-full md:w-auto">
+                <button type="submit" class="w-full sm:flex-1 md:flex-none bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all">Search</button>
                 @if(request('search'))
-                    <a href="{{ route('manager.returns.index') }}" class="px-4 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-red-500 transition-all">Clear</a>
+                    <a href="{{ route('manager.returns.index') }}" class="w-full sm:w-auto text-center px-4 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-red-500 transition-all">Clear</a>
                 @endif
             </div>
         </form>
@@ -42,17 +44,17 @@
             <table class="w-full text-left border-collapse">
                 <thead>
                     <tr class="border-b border-slate-50">
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Return Date</th>
+                        <th class="hidden md:table-cell px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Date</th>
                         <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Receipt / Product</th>
                         <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Qty / Refund</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Reason</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Authorized By</th>
+                        <th class="hidden sm:table-cell px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Reason</th>
+                        <th class="hidden lg:table-cell px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Authorized By</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-50">
                     @forelse($returns as $return)
                         <tr class="hover:bg-slate-50/50 transition-all group">
-                            <td class="px-8 py-6">
+                            <td class="hidden md:table-cell px-8 py-6">
                                 <p class="text-[10px] font-black text-slate-400 uppercase tracking-tight">{{ $return->created_at->format('d M, Y') }}</p>
                                 <p class="text-[9px] font-bold text-slate-300 mt-0.5">{{ $return->created_at->format('h:i A') }}</p>
                             </td>
@@ -72,12 +74,12 @@
                                     </span>
                                 </div>
                             </td>
-                            <td class="px-8 py-6">
+                            <td class="hidden sm:table-cell px-8 py-6">
                                 <span class="px-3 py-1 bg-slate-50 text-slate-600 text-[9px] font-black rounded-lg uppercase tracking-widest">
                                     {{ $return->reason }}
                                 </span>
                             </td>
-                            <td class="px-8 py-6">
+                            <td class="hidden lg:table-cell px-8 py-6">
                                 <div class="flex items-center gap-2">
                                     <div class="w-6 h-6 bg-slate-100 rounded-full flex items-center justify-center text-[10px] font-black text-slate-400">
                                         {{ substr($return->user->name ?? 'S', 0, 1) }}

@@ -30,10 +30,10 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                 </div>
             </div>
-            <div class="flex items-center gap-2 w-full md:w-auto">
-                <button type="submit" class="flex-1 md:flex-none bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all">Search</button>
+            <div class="flex flex-col sm:flex-row items-center gap-2 w-full md:w-auto">
+                <button type="submit" class="w-full sm:flex-1 md:flex-none bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all">Search</button>
                 @if(request('search'))
-                    <a href="{{ route('manager.stock.audit') }}" class="px-4 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-red-500 transition-all">Clear</a>
+                    <a href="{{ route('manager.stock.audit') }}" class="w-full sm:w-auto text-center px-4 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-red-500 transition-all">Clear</a>
                 @endif
             </div>
         </form>
@@ -45,8 +45,8 @@
                 <thead>
                     <tr class="border-b border-slate-50">
                         <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Product Info</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Category</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] text-center">Expected Stock</th>
+                        <th class="hidden sm:table-cell px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Category</th>
+                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] text-center">Expected</th>
                         <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] text-right">Action</th>
                     </tr>
                 </thead>
@@ -69,7 +69,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="px-8 py-6">
+                                <td class="hidden sm:table-cell px-8 py-6">
                                     <span class="px-3 py-1 bg-slate-100 text-slate-600 text-[9px] font-black rounded-lg uppercase tracking-widest">
                                         {{ $product->category->name ?? 'Uncategorized' }}
                                     </span>

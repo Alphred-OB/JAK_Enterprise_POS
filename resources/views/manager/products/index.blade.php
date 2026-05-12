@@ -49,9 +49,9 @@
                 <thead>
                     <tr class="border-b border-slate-50">
                         <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Item Details</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Category</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Current Stock</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Pricing (GH₵)</th>
+                        <th class="hidden sm:table-cell px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Category</th>
+                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Stock</th>
+                        <th class="hidden lg:table-cell px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Pricing (GH₵)</th>
                         <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] text-right">Settings</th>
                     </tr>
                 </thead>
@@ -73,7 +73,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-8 py-6">
+                            <td class="hidden sm:table-cell px-8 py-6">
                                 <span class="px-3 py-1 bg-slate-100 text-slate-600 text-[9px] font-black rounded-lg uppercase tracking-widest">
                                     {{ $product->category->name ?? 'None' }}
                                 </span>
@@ -93,7 +93,7 @@
                                     @endif
                                 </div>
                             </td>
-                            <td class="px-8 py-6">
+                            <td class="hidden lg:table-cell px-8 py-6">
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
                                         <p class="text-[8px] font-black text-slate-400 uppercase">Cost</p>

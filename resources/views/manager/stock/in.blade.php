@@ -7,10 +7,12 @@
             <h1 class="text-3xl font-black text-slate-900 tracking-tight leading-none">Receive Stock</h1>
             <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-2">Log bulk deliveries from suppliers</p>
         </div>
-        <a href="{{ route('manager.stock.audit') }}" class="w-full md:w-auto bg-slate-100 text-slate-500 px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-200 transition-all active:scale-95 flex items-center justify-center gap-3">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-            Back to Audit
-        </a>
+        <div class="flex flex-col sm:flex-row items-center gap-2 w-full md:w-auto">
+            <a href="{{ route('manager.stock.audit') }}" class="w-full sm:flex-1 md:flex-none justify-center bg-slate-100 text-slate-500 px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-200 transition-all active:scale-95 flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                Back to Audit
+            </a>
+        </div>
     </header>
 
     @if(session('success'))
@@ -59,16 +61,14 @@
                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Invoice / Reference Number (Optional)</label>
                     <input type="text" name="reference_number" class="w-full bg-slate-50 border-transparent rounded-2xl py-4 px-6 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-sm" placeholder="e.g. INV-2024-001">
                 </div>
-                <div class="col-span-2">
+                <div class="col-span-1 md:col-span-2">
                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Delivery Notes (Optional)</label>
                     <textarea name="notes" rows="3" class="w-full bg-slate-50 border-transparent rounded-2xl py-4 px-6 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-sm" placeholder="Any details about the delivery condition..."></textarea>
                 </div>
             </div>
 
-            <hr class="border-slate-100">
-
-            <div class="flex justify-end">
-                <button type="submit" class="w-full md:w-auto bg-slate-900 text-white px-10 py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-200 active:scale-95">
+            <div class="flex justify-end pt-6 border-t border-slate-50">
+                <button type="submit" class="w-full sm:w-auto bg-slate-900 text-white px-10 py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-200 active:scale-95">
                     Log Delivery & Update Stock
                 </button>
             </div>
