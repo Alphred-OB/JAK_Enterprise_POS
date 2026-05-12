@@ -861,8 +861,6 @@ function posSystem() {
         discount: 0,
         tempDiscount: 0,
         showDiscountModal: false,
-        isPinRequired: false,
-        managerPin: '',
         paymentMethod: 'cash',
         showSuccess: false,
         showSupport: false,
@@ -919,7 +917,12 @@ function posSystem() {
                 const response = await axios.get('/api/shifts/current');
                 if (response.data.has_open_shift) {
                     this.currentShift = response.data.shift;
-                    this.currentShift.opened_at_formatted = moment(this.currentShift.opened_at).format('hh:mm A');
+                    const date = new Date(this.currentShift.opened_at);
+                    this.currentShift.opened_at_formatted = date.toLocaleTimeString('en-US', { 
+                        hour: '2-digit', 
+                        minute: '2-digit',
+                        hour12: true 
+                    });
                     this.showShiftModal = false;
                 } else {
                     this.showShiftModal = true;
