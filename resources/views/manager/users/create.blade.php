@@ -1,14 +1,14 @@
 @extends('layouts.manager')
 
 @section('content')
-<div class="p-8 max-w-2xl">
+<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-6 md:pt-8 max-w-2xl">
     <header class="mb-12">
         <a href="{{ route('admin.users.index') }}" class="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-blue-600 transition-all flex items-center gap-2 mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" /></svg>
             Back to Team List
         </a>
-        <h1 class="text-4xl font-black text-slate-900 tracking-tight">Add New Staff</h1>
-        <p class="text-sm font-bold text-slate-500 uppercase tracking-widest mt-1">Register a new team member and set their permissions</p>
+        <h1 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-none">Add New Staff</h1>
+        <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-2">Register a new team member and set their permissions</p>
     </header>
 
     <form action="{{ route('admin.users.store') }}" method="POST" class="space-y-8">
@@ -55,11 +55,11 @@
             </div>
         </div>
 
-        <div class="flex items-center gap-4">
-            <button type="submit" class="flex-1 bg-slate-900 text-white py-6 rounded-[24px] font-black text-xs uppercase tracking-[0.2em] hover:bg-blue-600 transition-all shadow-2xl shadow-slate-200 active:scale-95">
+        <div class="flex flex-col sm:flex-row items-center gap-4">
+            <button type="submit" class="w-full sm:flex-1 bg-slate-900 text-white py-6 rounded-[24px] font-black text-xs uppercase tracking-[0.2em] hover:bg-blue-600 transition-all shadow-2xl shadow-slate-200 active:scale-95">
                 Onboard Staff Member
             </button>
-            <a href="{{ route('admin.users.index') }}" class="px-10 py-6 bg-white border border-slate-100 rounded-[24px] text-[10px] font-black text-slate-400 uppercase tracking-widest hover:bg-slate-50 transition-all">Cancel</a>
+            <a href="{{ route('admin.users.index') }}" class="w-full sm:w-auto text-center px-10 py-6 bg-white border border-slate-100 rounded-[24px] text-[10px] font-black text-slate-400 uppercase tracking-widest hover:bg-slate-50 transition-all">Cancel</a>
         </div>
     </form>
 </div>

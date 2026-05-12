@@ -18,13 +18,13 @@
             @csrf
             @method('PUT')
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12">
                 <!-- Left: Branding -->
                 <div class="lg:col-span-1">
-                    <h3 class="text-sm font-black text-slate-900 uppercase tracking-[0.2em] mb-6">Brand Identity</h3>
+                    <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-6">Brand Identity</h3>
                     
                     <div x-data="{ photoPreview: '{{ $settings->shop_logo ? asset('storage/' . $settings->shop_logo) : null }}' }" class="space-y-6">
-                        <div class="w-full aspect-square bg-white rounded-[40px] border-2 border-dashed border-slate-200 flex items-center justify-center overflow-hidden group relative">
+                        <div class="w-full aspect-square bg-white rounded-[32px] md:rounded-[40px] border-2 border-dashed border-slate-200 flex items-center justify-center overflow-hidden group relative shadow-sm">
                             <template x-if="!photoPreview">
                                 <div class="text-center p-8">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-slate-300 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
@@ -81,9 +81,8 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center justify-end pt-4">
-                        <button type="submit" class="w-full md:w-auto bg-slate-900 text-white px-12 py-5 rounded-[20px] md:rounded-[24px] font-black text-[10px] md:text-xs uppercase tracking-[0.2em] hover:bg-blue-600 transition-all shadow-2xl shadow-slate-200 active:scale-95 text-center">
-                            Save Configuration
+                        <button type="submit" class="w-full md:w-auto bg-slate-900 text-white px-12 py-5 rounded-[20px] md:rounded-[24px] font-black text-xs uppercase tracking-[0.2em] hover:bg-blue-600 transition-all shadow-2xl shadow-slate-200 active:scale-95 text-center">
+                            Save Shop Configuration
                         </button>
                     </div>
                 </div>

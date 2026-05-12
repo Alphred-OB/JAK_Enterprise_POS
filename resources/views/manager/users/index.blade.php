@@ -7,12 +7,12 @@
             <h1 class="text-3xl font-black text-slate-900 tracking-tight leading-none">Staff & Roles</h1>
             <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-1">Manage your team and their system permissions</p>
         </div>
-        <div class="flex items-center gap-2 w-full md:w-auto">
-            <a href="{{ route('manager.export.staff') }}" class="flex-1 md:flex-none justify-center bg-white text-slate-600 px-6 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition-all border border-slate-100 flex items-center gap-3">
+        <div class="flex flex-col sm:flex-row items-center gap-2 w-full md:w-auto">
+            <a href="{{ route('manager.export.staff') }}" class="w-full sm:flex-1 md:flex-none justify-center bg-white text-slate-600 px-6 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition-all border border-slate-100 flex items-center gap-3">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                 Export
             </a>
-            <a href="{{ route('admin.users.create') }}" class="flex-[1.5] md:flex-none justify-center bg-blue-600 text-white px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-100 active:scale-95 flex items-center gap-3">
+            <a href="{{ route('admin.users.create') }}" class="w-full sm:flex-[1.5] md:flex-none justify-center bg-blue-600 text-white px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-100 active:scale-95 flex items-center gap-3">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
                 Add Staff
             </a>
