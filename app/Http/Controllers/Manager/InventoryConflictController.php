@@ -12,6 +12,12 @@ class InventoryConflictController extends Controller
 {
     public function index()
     {
+        // Safety check: If migration hasn't run, return empty collection instead of crashing
+        if (!\Illuminate\Support\Facades\Schema::hasColumn('sale_items', 'status')) {
+            $conflicts = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 20);
+            return view('manager.inventory.conflicts', compact('conflicts'))->with('warning', 'Database update required. Please run migrations.');
+        }
+
         $conflicts = SaleItem::with(['product', 'sale.user'])
             ->where('status', 'conflict')
             ->orderBy('created_at', 'desc')
