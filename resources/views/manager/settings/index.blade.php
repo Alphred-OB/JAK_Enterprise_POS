@@ -1,9 +1,9 @@
 @extends('layouts.manager')
 
 @section('content')
-<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-20 lg:pt-8">
+<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-6 md:pt-8">
     <header class="mb-10 text-left">
-        <h1 class="text-3xl font-black text-slate-900 tracking-tight leading-none">Shop Settings</h1>
+        <h1 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-none">Shop Settings</h1>
         <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-2">Customize your brand identity and system defaults</p>
     </header>
 
@@ -82,7 +82,7 @@
                     </div>
 
                     <div class="flex items-center justify-end pt-4">
-                        <button type="submit" class="w-full sm:w-auto bg-slate-900 text-white px-12 py-5 rounded-[20px] md:rounded-[24px] font-black text-[10px] md:text-xs uppercase tracking-[0.2em] hover:bg-blue-600 transition-all shadow-2xl shadow-slate-200 active:scale-95 text-center">
+                        <button type="submit" class="w-full md:w-auto bg-slate-900 text-white px-12 py-5 rounded-[20px] md:rounded-[24px] font-black text-[10px] md:text-xs uppercase tracking-[0.2em] hover:bg-blue-600 transition-all shadow-2xl shadow-slate-200 active:scale-95 text-center">
                             Save Configuration
                         </button>
                     </div>

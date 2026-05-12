@@ -23,17 +23,19 @@
 
     <!-- Filters Bar -->
     <div class="bg-white rounded-[32px] p-6 border border-slate-100 shadow-sm mb-8">
-        <form action="{{ route('manager.stock.audit') }}" method="GET" class="flex flex-wrap items-center gap-4">
-            <div class="flex-1 min-w-[300px] relative group">
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Search product name, sku, or barcode..." class="w-full bg-slate-50 border-transparent rounded-2xl py-4 pl-12 pr-6 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-sm">
+        <form action="{{ route('manager.stock.audit') }}" method="GET" class="flex flex-col md:flex-row items-center gap-4">
+            <div class="w-full md:flex-1 relative group">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Search name, SKU, or barcode..." class="w-full bg-slate-50 border-transparent rounded-2xl py-4 pl-12 pr-6 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-sm">
                 <div class="absolute left-4 top-4 text-slate-300 group-focus-within:text-blue-600 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                 </div>
             </div>
-            <button type="submit" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-600 transition-all">Search</button>
-            @if(request('search'))
-                <a href="{{ route('manager.stock.audit') }}" class="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-red-500 transition-all">Clear</a>
-            @endif
+            <div class="flex items-center gap-2 w-full md:w-auto">
+                <button type="submit" class="flex-1 md:flex-none bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all">Search</button>
+                @if(request('search'))
+                    <a href="{{ route('manager.stock.audit') }}" class="px-4 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-red-500 transition-all">Clear</a>
+                @endif
+            </div>
         </form>
     </div>
 
@@ -96,14 +98,14 @@
                                                 <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Expected: {{ $product->stock_quantity }}</span>
                                             </div>
 
-                                            <div class="grid grid-cols-2 gap-4">
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                                 <div>
-                                                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Actual Count On Shelf</label>
-                                                    <input type="number" name="physical_count" required min="0" class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl py-4 px-4 focus:ring-0 focus:border-blue-500 font-black text-2xl shadow-sm">
+                                                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3">Actual Count On Shelf</label>
+                                                    <input type="number" name="physical_count" required min="0" class="w-full bg-white border border-slate-200 text-slate-900 rounded-2xl py-5 px-6 focus:ring-0 focus:border-blue-500 font-black text-3xl shadow-sm appearance-none">
                                                 </div>
                                                 <div>
-                                                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Reason For Count</label>
-                                                    <select name="reason" required class="w-full bg-white border border-slate-200 text-slate-700 rounded-xl py-4 px-4 focus:ring-0 focus:border-blue-500 font-bold text-xs h-[64px] shadow-sm">
+                                                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3">Reason For Adjustment</label>
+                                                    <select name="reason" required class="w-full bg-white border border-slate-200 text-slate-900 rounded-2xl py-5 px-6 focus:ring-0 focus:border-blue-500 font-bold text-xs h-[76px] shadow-sm appearance-none">
                                                         <option value="Routine Check">Routine Check</option>
                                                         <option value="Damage Recorded">Damage Recorded</option>
                                                         <option value="Theft Suspected">Theft Suspected</option>

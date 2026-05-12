@@ -1,9 +1,9 @@
 @extends('layouts.manager')
 
 @section('content')
-<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-20 lg:pt-8 max-w-4xl mx-auto">
+<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-6 md:pt-8 max-w-4xl mx-auto">
     <header class="mb-12 text-left">
-        <h1 class="text-3xl font-black text-slate-900 tracking-tight leading-none">Backup & Recovery</h1>
+        <h1 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-none">Backup & Recovery</h1>
         <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-2">Protect your business data with secure system snapshots</p>
     </header>
 

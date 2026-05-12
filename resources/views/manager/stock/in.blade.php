@@ -1,13 +1,13 @@
 @extends('layouts.manager')
 
 @section('content')
-<div class="p-8">
-    <header class="flex items-center justify-between mb-10">
+<div class="min-h-screen bg-[#fafbfc] p-4 md:p-8 pt-6 md:pt-8">
+    <header class="flex flex-col md:flex-row items-start md:items-center justify-between mb-10 gap-6">
         <div>
-            <h1 class="text-3xl font-black text-slate-900 tracking-tight">Receive Stock</h1>
-            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Log bulk deliveries from suppliers</p>
+            <h1 class="text-3xl font-black text-slate-900 tracking-tight leading-none">Receive Stock</h1>
+            <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-2">Log bulk deliveries from suppliers</p>
         </div>
-        <a href="{{ route('manager.stock.audit') }}" class="bg-slate-100 text-slate-500 px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-slate-200 transition-all active:scale-95 flex items-center gap-3">
+        <a href="{{ route('manager.stock.audit') }}" class="w-full md:w-auto bg-slate-100 text-slate-500 px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-200 transition-all active:scale-95 flex items-center justify-center gap-3">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
             Back to Audit
         </a>
@@ -38,7 +38,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Supplier</label>
                     <select name="supplier_id" required class="w-full bg-slate-50 border-transparent rounded-2xl py-5 px-6 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-black text-sm appearance-none">
@@ -68,7 +68,7 @@
             <hr class="border-slate-100">
 
             <div class="flex justify-end">
-                <button type="submit" class="bg-slate-900 text-white px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-200 active:scale-95">
+                <button type="submit" class="w-full md:w-auto bg-slate-900 text-white px-10 py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-200 active:scale-95">
                     Log Delivery & Update Stock
                 </button>
             </div>

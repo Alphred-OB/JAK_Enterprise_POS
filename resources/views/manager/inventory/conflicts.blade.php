@@ -18,8 +18,8 @@
             <table class="w-full text-left">
                 <thead>
                     <tr class="border-b border-slate-50">
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Product / SKU</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Sale Info</th>
+                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Product Info</th>
+                        <th class="hidden md:table-cell px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Sale Info</th>
                         <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Conflict Details</th>
                         <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Action</th>
                     </tr>
@@ -29,14 +29,14 @@
                         <tr class="hover:bg-slate-50/50 transition-colors group">
                             <td class="px-8 py-6">
                                 <p class="text-sm font-black text-slate-900">{{ $item->product->name }}</p>
-                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">{{ $item->product->sku }}</p>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter md:hidden">Sold on #{{ $item->sale->receipt_number }}</p>
+                            </td>
+                            <td class="hidden md:table-cell px-8 py-6">
+                                <p class="text-[11px] font-black text-slate-900 uppercase">#{{ $item->sale->receipt_number }}</p>
+                                <p class="text-[10px] font-bold text-slate-400">By {{ $item->sale->user->name }}</p>
                             </td>
                             <td class="px-8 py-6">
-                                <p class="text-[11px] font-black text-slate-900 uppercase">{{ $item->sale->receipt_number }}</p>
-                                <p class="text-[10px] font-bold text-slate-400">Sold by {{ $item->sale->user->name }}</p>
-                            </td>
-                            <td class="px-8 py-6">
-                                <div class="bg-red-50 text-red-700 px-4 py-3 rounded-2xl text-[11px] font-bold leading-relaxed border border-red-100">
+                                <div class="bg-red-50 text-red-700 px-4 py-3 rounded-2xl text-[10px] md:text-[11px] font-bold leading-relaxed border border-red-100">
                                     {{ $item->conflict_note }}
                                 </div>
                             </td>
