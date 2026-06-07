@@ -19,7 +19,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        view()->share('settings', \App\Models\Setting::first() ?? new \App\Models\Setting());
+        try {
+            view()->share('settings', \App\Models\Setting::first() ?? new \App\Models\Setting());
+        } catch (\Throwable $e) {
+            view()->share('settings', new \App\Models\Setting());
+        }
 
         // Global sidebar variables for the manager layout
         view()->composer('layouts.manager', function ($view) {

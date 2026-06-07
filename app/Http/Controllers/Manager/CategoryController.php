@@ -15,6 +15,11 @@ class CategoryController extends Controller
         return view('manager.categories.index', compact('categories'));
     }
 
+    private static function bustCache(): void
+    {
+        \Illuminate\Support\Facades\Cache::forget('categories:all');
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -22,7 +27,8 @@ class CategoryController extends Controller
             'description' => 'nullable|string'
         ]);
 
-        $category = Category::create($request->all());
+        $category = Category::create($request->only(['name', 'description']));
+        self::bustCache();
 
         Activity::log(
             'category_created',
@@ -40,7 +46,8 @@ class CategoryController extends Controller
             'description' => 'nullable|string'
         ]);
 
-        $category->update($request->all());
+        $category->update($request->only(['name', 'description']));
+        self::bustCache();
 
         Activity::log(
             'category_updated',
@@ -59,6 +66,7 @@ class CategoryController extends Controller
 
         $categoryName = $category->name;
         $category->delete();
+        self::bustCache();
 
         Activity::log(
             'category_deleted',

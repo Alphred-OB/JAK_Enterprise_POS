@@ -83,7 +83,7 @@
                                     <div class="flex items-start gap-4">
                                         @if($activity->product)
                                             <div class="w-10 h-10 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-center overflow-hidden shrink-0">
-                                                <img src="{{ asset('storage/' . $activity->product->image_path) }}" class="w-full h-full object-cover">
+                                                <img src="{{ asset('storage/' . $activity->product->image_path) }}" class="w-full h-full object-cover" loading="lazy">
                                             </div>
                                         @endif
                                         <p class="text-sm font-bold text-slate-600 leading-snug">{{ $activity->description }}</p>

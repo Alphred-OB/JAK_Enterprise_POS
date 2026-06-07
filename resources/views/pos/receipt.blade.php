@@ -6,14 +6,16 @@
     <title>Receipt #{{ $sale->receipt_number }}</title>
     <style>
         @page { size: 80mm auto; margin: 0; }
-        body { 
-            font-family: 'Courier New', Courier, monospace; 
-            width: 80mm; 
-            margin: 0; 
-            padding: 10px; 
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            width: 80mm;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 10px;
             font-size: 12px;
             line-height: 1.4;
             color: #000;
+            box-sizing: border-box;
         }
         .text-center { text-align: center; }
         .text-right { text-align: right; }
@@ -112,8 +114,8 @@
         </div>
     </div>
 
-    <button class="no-print" onclick="window.close()" style="position: fixed; top: 10px; right: 10px; padding: 10px; background: #000; color: #fff; border: none; border-radius: 5px; cursor: pointer;">
-        Close Window
+    <button class="no-print" onclick="window.close()" style="position: fixed; top: 10px; right: 10px; padding: 6px 14px; background: #1e293b; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; font-family: inherit;">
+        Close
     </button>
 </body>
 </html>

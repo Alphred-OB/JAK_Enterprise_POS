@@ -23,9 +23,19 @@
                     This will create a full SQL backup of your entire POS database, including sales history, inventory, staff records, and settings.
                 </p>
 
-                <a href="{{ route('admin.backup.download') }}" class="w-full sm:w-auto bg-slate-900 text-white px-8 md:px-12 py-5 rounded-[20px] md:rounded-[24px] font-black text-[10px] md:text-xs uppercase tracking-[0.2em] hover:bg-blue-600 transition-all shadow-2xl shadow-slate-200 active:scale-95 text-center">
-                    Download SQL Backup
-                </a>
+                @if ($errors->has('password'))
+                    <p class="text-red-600 text-xs font-bold mb-4">{{ $errors->first('password') }}</p>
+                @endif
+                <form method="POST" action="{{ route('admin.backup.download') }}" class="w-full flex flex-col items-center gap-4">
+                    @csrf
+                    <input type="password" name="password" placeholder="Enter your password to confirm"
+                        class="w-full sm:w-80 px-5 py-4 rounded-[16px] border border-slate-200 text-sm font-bold text-slate-800 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required autocomplete="current-password">
+                    <button type="submit"
+                        class="w-full sm:w-auto bg-slate-900 text-white px-8 md:px-12 py-5 rounded-[20px] md:rounded-[24px] font-black text-[10px] md:text-xs uppercase tracking-[0.2em] hover:bg-blue-600 transition-all shadow-2xl shadow-slate-200 active:scale-95">
+                        Download SQL Backup
+                    </button>
+                </form>
                 
                 <div class="mt-8 flex items-center gap-2">
                     <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>

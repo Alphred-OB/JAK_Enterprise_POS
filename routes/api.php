@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\SaleController;
 use App\Http\Controllers\Api\ShiftController;
 use App\Http\Controllers\Api\SupportController;
-use App\Http\Controllers\Api\AuthController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -24,12 +23,10 @@ Route::middleware('auth:sanctum')->group(function () {
     // Customers (Quick Add)
     Route::post('/customers', [\App\Http\Controllers\Api\CustomerController::class, 'store']);
 
-    // Security & Overrides
-    Route::post('/verify-pin', [\App\Http\Controllers\Api\PinVerificationController::class, 'verify']);
+    // PIN verification — rate limited to 5 attempts per minute per user
+    Route::post('/verify-pin', [\App\Http\Controllers\Api\PinVerificationController::class, 'verify'])
+        ->middleware('throttle:5,1');
 
     // Support
     Route::post('/support-reports', [SupportController::class, 'store']);
-
-    // Auth/Security
-    Route::post('/verify-pin', [AuthController::class, 'verifyPin']);
 });

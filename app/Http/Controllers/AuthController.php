@@ -28,10 +28,17 @@ class AuthController extends Controller
         $this->ensureIsNotRateLimited($request);
 
         if (Auth::attempt($credentials, $request->remember)) {
-            $request->session()->regenerate();
-            
-            RateLimiter::clear($this->throttleKey($request));
+            if (!Auth::user()->is_active) {
+                Auth::guard('web')->logout();
+                $request->session()->invalidate();
+                RateLimiter::hit($this->throttleKey($request));
+                return back()->withErrors([
+                    'email' => 'Your account has been deactivated. Please contact an administrator.',
+                ])->onlyInput('email');
+            }
 
+            $request->session()->regenerate();
+            RateLimiter::clear($this->throttleKey($request));
             \App\Models\Activity::log('login', 'User logged in');
 
             return $this->redirectBasedOnRole(Auth::user());
@@ -91,7 +98,7 @@ class AuthController extends Controller
     {
         \App\Models\Activity::log('logout', 'User logged out');
 
-        Auth::logout();
+        Auth::guard('web')->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

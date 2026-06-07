@@ -40,7 +40,7 @@ class SupplierController extends Controller
             'address' => 'nullable|string',
         ]);
 
-        Supplier::create($request->all());
+        Supplier::create($request->only(['name', 'contact_person', 'phone', 'email', 'address']));
 
         return redirect()->route('manager.suppliers.index')->with('success', 'Supplier added successfully.');
     }
@@ -60,7 +60,7 @@ class SupplierController extends Controller
             'address' => 'nullable|string',
         ]);
 
-        $supplier->update($request->all());
+        $supplier->update($request->only(['name', 'contact_person', 'phone', 'email', 'address']));
 
         return redirect()->route('manager.suppliers.index')->with('success', 'Supplier updated successfully.');
     }

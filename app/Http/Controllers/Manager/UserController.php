@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
@@ -44,17 +45,17 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => ['required', 'confirmed', Password::min(8)->letters()->mixedCase()->numbers()],
             'role' => 'required|in:cashier,manager,admin,inventory_officer',
             'pin_code' => 'nullable|string|size:4',
         ]);
 
         User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'name'     => $request->name,
+            'email'    => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role,
-            'pin_code' => $request->pin_code,
+            'role'     => $request->role,
+            'pin_code' => $request->filled('pin_code') ? $request->pin_code : null,
         ]);
 
         return redirect()->route('admin.users.index')->with('success', 'Staff member added successfully.');
@@ -78,7 +79,7 @@ class UserController extends Controller
         $user->update($request->only('name', 'email', 'role', 'pin_code'));
 
         if ($request->filled('password')) {
-            $request->validate(['password' => 'required|string|min:8|confirmed']);
+            $request->validate(['password' => ['required', 'confirmed', Password::min(8)->letters()->mixedCase()->numbers()]]);
             $user->update(['password' => Hash::make($request->password)]);
         }
 
