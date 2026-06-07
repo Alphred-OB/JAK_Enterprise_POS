@@ -10,8 +10,10 @@ return new class extends Migration
     {
         Schema::create('purchase_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('purchase_id')->constrained()->onDelete('cascade');
-            $table->foreignId('product_id')->constrained()->onDelete('restrict');
+            $table->unsignedBigInteger('purchase_id');
+            $table->foreign('purchase_id')->references('id')->on('purchases')->onDelete('cascade');
+            $table->char('product_id', 36);
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('restrict');
             $table->integer('quantity');
             $table->decimal('unit_cost', 10, 2);
             $table->decimal('total_cost', 12, 2);

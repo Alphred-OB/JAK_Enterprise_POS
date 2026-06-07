@@ -36,7 +36,9 @@ class ProductController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $data = $request->all();
+        $data = $request->only(['name', 'category_id', 'sku', 'description', 'barcode',
+                                 'cost_price', 'selling_price', 'wholesale_price',
+                                 'stock_quantity', 'low_stock_threshold']);
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('products', 'public');
@@ -65,10 +67,11 @@ class ProductController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $data = $request->all();
+        $data = $request->only(['name', 'category_id', 'sku', 'description', 'barcode',
+                                 'cost_price', 'selling_price', 'wholesale_price',
+                                 'stock_quantity', 'low_stock_threshold']);
 
         if ($request->hasFile('image')) {
-            // Delete old image
             if ($product->image_path) {
                 Storage::disk('public')->delete($product->image_path);
             }

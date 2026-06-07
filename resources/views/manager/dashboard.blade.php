@@ -144,7 +144,7 @@
                                 <div class="flex items-center gap-4 min-w-0">
                                     <div class="w-10 h-10 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-center overflow-hidden shrink-0">
                                         @if($item->product->image_path)
-                                            <img src="{{ asset('storage/' . $item->product->image_path) }}" class="w-full h-full object-cover">
+                                            <img src="{{ asset('storage/' . $item->product->image_path) }}" class="w-full h-full object-cover" loading="lazy">
                                         @else
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
                                         @endif
@@ -290,10 +290,10 @@
     new Chart(ctx, {
         type: 'line',
         data: {
-            labels: {!! json_encode($chartData->pluck('date')->map(fn($d) => \Carbon\Carbon::parse($d)->format('D, d M'))) !!},
+            labels: @json($chartData->pluck('date')->map(fn($d) => \Carbon\Carbon::parse($d)->format('D, d M'))),
             datasets: [{
                 label: 'Sales Amount',
-                data: {!! json_encode($chartData->pluck('total')) !!},
+                data: @json($chartData->pluck('total')),
                 borderColor: '#2563eb',
                 borderWidth: 4,
                 backgroundColor: gradient,

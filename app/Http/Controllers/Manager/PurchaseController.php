@@ -53,24 +53,48 @@ class PurchaseController extends Controller
                 'status' => 'received'
             ]);
 
+            // Batch-load all products in one query instead of one per item
+            $productIds = collect($request->items)->pluck('product_id')->unique()->all();
+            $products = Product::whereIn('id', $productIds)->get()->keyBy('id');
+
+            $purchaseItemsInsert = [];
+            $stockUpdates = [];
+
             foreach ($request->items as $itemData) {
-                $itemTotal = $itemData['quantity'] * $itemData['unit_cost'];
+                $itemTotal  = $itemData['quantity'] * $itemData['unit_cost'];
                 $totalCost += $itemTotal;
 
-                PurchaseItem::create([
+                $purchaseItemsInsert[] = [
                     'purchase_id' => $purchase->id,
-                    'product_id' => $itemData['product_id'],
-                    'quantity' => $itemData['quantity'],
-                    'unit_cost' => $itemData['unit_cost'],
-                    'total_cost' => $itemTotal
-                ]);
+                    'product_id'  => $itemData['product_id'],
+                    'quantity'    => $itemData['quantity'],
+                    'unit_cost'   => $itemData['unit_cost'],
+                    'total_cost'  => $itemTotal,
+                    'created_at'  => now(),
+                    'updated_at'  => now(),
+                ];
 
-                // Update product stock
-                $product = Product::find($itemData['product_id']);
-                $product->increment('stock_quantity', $itemData['quantity']);
-                
-                // Optionally update the product's default cost_price based on the latest purchase
-                $product->update(['cost_price' => $itemData['unit_cost']]);
+                // Accumulate quantities so duplicate product lines in the same
+                // request are summed rather than overwritten.
+                if (isset($stockUpdates[$itemData['product_id']])) {
+                    $stockUpdates[$itemData['product_id']]['qty'] += $itemData['quantity'];
+                    $stockUpdates[$itemData['product_id']]['cost_price'] = $itemData['unit_cost'];
+                } else {
+                    $stockUpdates[$itemData['product_id']] = [
+                        'qty'        => $itemData['quantity'],
+                        'cost_price' => $itemData['unit_cost'],
+                    ];
+                }
+            }
+
+            // Single insert for all purchase items
+            PurchaseItem::insert($purchaseItemsInsert);
+
+            // Update each product's stock and cost price (still one query per product, but no extra find())
+            foreach ($products as $product) {
+                $update = $stockUpdates[$product->id];
+                $product->increment('stock_quantity', $update['qty']);
+                $product->update(['cost_price' => $update['cost_price']]);
             }
 
             $purchase->update(['total_cost' => $totalCost]);
@@ -89,7 +113,8 @@ class PurchaseController extends Controller
             return redirect()->route('manager.purchases.index')->with('success', 'Stock-in recorded and inventory updated successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Error recording purchase: ' . $e->getMessage())->withInput();
+            \Illuminate\Support\Facades\Log::error('Purchase recording failed', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+            return back()->with('error', 'Failed to record purchase. Please try again.')->withInput();
         }
     }
 

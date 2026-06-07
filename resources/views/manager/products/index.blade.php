@@ -62,7 +62,7 @@
                                 <div class="flex items-center gap-4">
                                     <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center overflow-hidden border border-slate-100 group-hover:bg-white transition-all shadow-sm shrink-0">
                                         @if($product->image_path)
-                                            <img src="{{ asset('storage/' . $product->image_path) }}" class="w-full h-full object-cover">
+                                            <img src="{{ asset('storage/' . $product->image_path) }}" class="w-full h-full object-cover" loading="lazy">
                                         @else
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-300 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
                                         @endif
@@ -133,7 +133,7 @@
             <div class="bg-white rounded-[40px] border border-slate-100 shadow-sm overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all group flex flex-col">
                 <div class="aspect-square bg-slate-50 relative overflow-hidden shrink-0">
                     @if($product->image_path)
-                        <img src="{{ asset('storage/' . $product->image_path) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <img src="{{ asset('storage/' . $product->image_path) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
                     @else
                         <div class="w-full h-full flex items-center justify-center text-slate-200">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>

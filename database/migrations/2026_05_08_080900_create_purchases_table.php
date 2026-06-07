@@ -10,8 +10,10 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('supplier_id')->constrained()->onDelete('restrict');
-            $table->foreignId('user_id')->constrained()->onDelete('restrict');
+            $table->char('supplier_id', 36);
+            $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('restrict');
+            $table->char('user_id', 36);
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
             $table->string('reference_number')->unique();
             $table->decimal('total_cost', 12, 2)->default(0);
             $table->enum('status', ['received', 'pending'])->default('received');

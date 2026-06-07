@@ -144,7 +144,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         // Backup & Restore
         Route::get('backup', [\App\Http\Controllers\Manager\BackupController::class, 'index'])->name('admin.backup.index');
-        Route::get('backup/download', [\App\Http\Controllers\Manager\BackupController::class, 'download'])->name('admin.backup.download');
+        Route::post('backup/download', [\App\Http\Controllers\Manager\BackupController::class, 'download'])->name('admin.backup.download');
 
         // Shop Settings
         Route::get('settings', [\App\Http\Controllers\Manager\SettingController::class, 'index'])->name('admin.settings.index');

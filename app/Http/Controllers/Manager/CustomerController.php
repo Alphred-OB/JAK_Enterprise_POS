@@ -44,7 +44,7 @@ class CustomerController extends Controller
             'total_debt' => 'nullable|numeric|min:0',
         ]);
 
-        Customer::create($request->all());
+        Customer::create($request->only(['name', 'phone', 'email', 'address', 'total_debt']));
 
         return redirect()->route('manager.customers.index')->with('success', 'Customer added successfully.');
     }
@@ -64,7 +64,7 @@ class CustomerController extends Controller
             'total_debt' => 'nullable|numeric|min:0',
         ]);
 
-        $customer->update($request->all());
+        $customer->update($request->only(['name', 'phone', 'email', 'address', 'total_debt']));
 
         return redirect()->route('manager.customers.index')->with('success', 'Customer profile updated.');
     }

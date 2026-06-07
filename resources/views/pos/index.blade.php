@@ -28,7 +28,7 @@
                 <template x-if="currentShift">
                     <div class="flex items-center gap-2 mt-1.5">
                         <span class="text-[8px] lg:text-[9px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded-full" x-text="'SHIFT: ' + currentShift.opened_at_formatted"></span>
-                        <button @click="openCloseShiftModal()" class="text-[9px] font-black text-red-500 uppercase tracking-widest hover:underline">Close Shift</button>
+                        <button dusk="close-shift-btn" @click="openCloseShiftModal()" class="text-[9px] font-black text-red-500 uppercase tracking-widest hover:underline">Close Shift</button>
                     </div>
                 </template>
             </div>
@@ -170,17 +170,17 @@
             </div>
 
             <!-- Horizontal Category Chips -->
-            <div class="flex items-center gap-3 overflow-x-auto pb-6 mb-8 no-scrollbar">
-                <button @click="selectedCategory = null" 
-                        :class="selectedCategory === null ? 'bg-blue-600 text-white shadow-lg shadow-blue-100' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'"
-                        class="px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap">
-                    All Categories
+            <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-6 no-scrollbar">
+                <button @click="selectedCategory = null"
+                        :class="selectedCategory === null ? 'bg-blue-600 text-white shadow-md shadow-blue-100' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'"
+                        class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap flex-shrink-0">
+                    All
                 </button>
-                
+
                 @foreach($categories as $category)
-                <button @click="selectedCategory = '{{ $category->id }}'" 
-                        :class="selectedCategory === '{{ $category->id }}' ? 'bg-blue-600 text-white shadow-lg shadow-blue-100' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'"
-                        class="px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap">
+                <button @click="selectedCategory = '{{ $category->id }}'"
+                        :class="selectedCategory === '{{ $category->id }}' ? 'bg-blue-600 text-white shadow-md shadow-blue-100' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'"
+                        class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap flex-shrink-0">
                     {{ $category->name }}
                 </button>
                 @endforeach
@@ -189,7 +189,8 @@
             <!-- GRID VIEW -->
             <div x-show="viewMode === 'grid'" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
                 <template x-for="(product, index) in filteredProducts" :key="product.id">
-                    <div 
+                    <div
+                        :dusk="'product-card-' + product.id"
                         @click="addToCart(product)"
                         class="bg-white rounded-[24px] border border-slate-200 hover:border-blue-600 hover:shadow-[0_20px_50px_rgba(37,99,235,0.1)] transition-all cursor-pointer group flex flex-col relative overflow-hidden h-full"
                     >
@@ -388,38 +389,38 @@
                 </div>
 
                 <!-- Discount Modal -->
-                <div x-show="showDiscountModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-[110] flex items-center justify-center p-6" x-cloak>
-                    <div class="bg-white rounded-[40px] p-10 max-w-md w-full shadow-2xl">
-                        <div class="flex items-center justify-between mb-8">
-                            <h3 class="text-2xl font-black text-slate-900 tracking-tight">Apply Discount</h3>
-                            <button @click="showDiscountModal = false" class="text-slate-400 hover:text-slate-600 transition-all">×</button>
+                <div x-show="showDiscountModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-[110] flex items-center justify-center p-4" x-cloak>
+                    <div class="bg-white rounded-2xl p-6 sm:p-8 max-w-sm w-full shadow-2xl max-h-[92dvh] overflow-y-auto">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-black text-slate-900 tracking-tight">Apply Discount</h3>
+                            <button @click="showDiscountModal = false" class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-all text-lg leading-none">×</button>
                         </div>
 
-                        <div class="space-y-6">
+                        <div class="space-y-5">
                             <template x-if="!isPinRequired">
                                 <div>
-                                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Discount Amount (GHS)</label>
-                                    <input type="number" x-model="tempDiscount" class="w-full bg-slate-50 border-transparent rounded-2xl py-5 px-6 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-black text-3xl" placeholder="0.00">
-                                    <p class="text-[9px] font-bold text-slate-400 mt-2 uppercase tracking-widest">Limit: GH₵ <span x-text="formatCurrency(subtotal * 0.05)"></span> without manager approval</p>
+                                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Discount Amount (GHS)</label>
+                                    <input type="number" x-model="tempDiscount" class="w-full bg-slate-50 border border-transparent rounded-xl py-3 px-4 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-black text-2xl" placeholder="0.00">
+                                    <p class="text-[9px] font-bold text-slate-400 mt-2 uppercase tracking-widest">Max without approval: <span x-text="formatCurrency(subtotal * 0.05)"></span></p>
                                 </div>
                             </template>
 
                             <template x-if="isPinRequired">
-                                <div class="bg-red-50 p-6 rounded-3xl border border-red-100">
-                                    <div class="flex items-center gap-4 mb-4">
-                                        <div class="w-10 h-10 bg-red-100 text-red-600 rounded-xl flex items-center justify-center shadow-sm">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                                <div class="bg-red-50 p-5 rounded-xl border border-red-100">
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <div class="w-9 h-9 bg-red-100 text-red-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
                                         </div>
                                         <div>
-                                            <p class="text-xs font-black text-red-900 uppercase">Manager Approval Needed</p>
-                                            <p class="text-[9px] font-bold text-red-600 uppercase tracking-widest">Large discount requested</p>
+                                            <p class="text-xs font-black text-red-900 uppercase">Manager Approval Required</p>
+                                            <p class="text-[9px] font-bold text-red-500 uppercase tracking-widest">Discount exceeds 5% limit</p>
                                         </div>
                                     </div>
-                                    <input type="password" maxlength="4" x-model="managerPin" class="w-full bg-white border-transparent rounded-2xl py-5 px-6 focus:ring-0 focus:border-red-600 transition-all font-black text-4xl tracking-[1em] text-center" placeholder="****">
+                                    <input type="password" maxlength="4" x-model="managerPin" class="w-full bg-white border border-red-200 rounded-xl py-3 px-4 focus:ring-0 focus:border-red-600 transition-all font-black text-2xl tracking-[1em] text-center" placeholder="****">
                                 </div>
                             </template>
 
-                            <button @click="isPinRequired ? verifyManagerPin() : applyDiscount()" class="w-full py-5 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-slate-100 hover:bg-blue-600 transition-all active:scale-[0.98]">
+                            <button @click="isPinRequired ? verifyManagerPin() : applyDiscount()" class="w-full py-2.5 bg-slate-900 text-white rounded-xl font-black text-sm uppercase tracking-widest hover:bg-blue-600 transition-all active:scale-[0.98]">
                                 <span x-text="isPinRequired ? 'Verify & Apply' : 'Apply Discount'"></span>
                             </button>
                         </div>
@@ -474,10 +475,13 @@
                     <p x-show="!selectedCustomer" class="text-[9px] font-bold text-red-500 mt-2">* Required for credit sales</p>
                 </div>
 
-                <button @click="checkout()" :disabled="cart.length === 0 || isProcessing || !currentShift || (paymentMethod === 'debt' && !selectedCustomer)"
-                        class="w-full h-16 rounded-[24px] bg-slate-900 hover:bg-slate-800 text-white flex items-center justify-center gap-3 transition-all active:scale-[0.98] disabled:opacity-50 shadow-xl shadow-slate-100">
+                <button dusk="checkout-btn" @click="checkout()" :disabled="cart.length === 0 || isProcessing || !currentShift || (paymentMethod === 'debt' && !selectedCustomer)"
+                        class="w-full h-12 rounded-xl bg-slate-900 hover:bg-slate-800 text-white flex items-center justify-center gap-3 transition-all active:scale-[0.98] disabled:opacity-50 shadow-lg shadow-slate-200">
                     <span x-show="!isProcessing" class="text-sm font-black uppercase tracking-[0.2em]" x-text="!currentShift ? 'Open Shift First' : 'Process Payment'"></span>
-                    <span x-show="isProcessing" class="text-sm font-black uppercase tracking-[0.2em]">Saving...</span>
+                    <span x-show="isProcessing" class="flex items-center gap-2 text-sm font-black uppercase tracking-[0.2em]">
+                        <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                        Processing...
+                    </span>
                 </button>
             </div>
         </aside>
@@ -502,45 +506,54 @@
     </main>
 
     <!-- Success Overlay -->
-    <div x-show="showSuccess" 
-         class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-6" 
+    <div dusk="success-overlay" x-show="showSuccess"
+         class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4 sm:p-6"
          style="display: none;"
          x-transition:enter="transition ease-out duration-300"
          x-transition:enter-start="opacity-0 scale-95"
          x-transition:enter-end="opacity-100 scale-100">
-        <div class="bg-white rounded-[40px] p-12 max-w-md w-full text-center shadow-2xl relative overflow-hidden">
-            <div class="w-24 h-24 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7" /></svg>
+        <div class="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 max-w-sm sm:max-w-md w-full text-center shadow-2xl relative overflow-y-auto max-h-[92dvh]">
+            <!-- Close button -->
+            <button @click="showSuccess = false" class="absolute top-3 right-3 w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <div class="w-14 h-14 sm:w-20 sm:h-20 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 sm:h-10 sm:w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7" /></svg>
             </div>
-            <h2 class="text-3xl font-black text-slate-900 mb-2">Sale Success!</h2>
-            <p class="text-slate-500 mb-6">Receipt <span class="font-mono font-bold text-slate-900" x-text="lastReceipt"></span> has been recorded.</p>
-            
+            <h2 class="text-xl sm:text-2xl font-black text-slate-900 mb-1">Sale Complete!</h2>
+            <p class="text-sm text-slate-500 mb-5">Receipt <span class="font-mono font-bold text-slate-900" x-text="lastReceipt"></span> recorded.</p>
+
             <!-- Receipt Preview -->
             <template x-if="!String(lastReceiptId).startsWith('offline_')">
-                <div class="mb-8 border-2 border-slate-100 rounded-3xl overflow-hidden bg-white shadow-inner">
-                    <div class="bg-slate-50 px-4 py-2 border-b border-slate-100 flex items-center justify-between">
-                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Live Preview</span>
+                <div class="mb-5 border border-slate-200 rounded-xl overflow-hidden bg-white shadow-sm">
+                    <div class="bg-slate-50 px-3 py-2 border-b border-slate-100 flex items-center justify-between">
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Receipt Preview</span>
                         <div class="flex gap-1">
-                            <div class="w-1.5 h-1.5 rounded-full bg-slate-200"></div>
-                            <div class="w-1.5 h-1.5 rounded-full bg-slate-200"></div>
+                            <div class="w-1.5 h-1.5 rounded-full bg-slate-300"></div>
+                            <div class="w-1.5 h-1.5 rounded-full bg-slate-300"></div>
                         </div>
                     </div>
-                    <iframe :src="'/pos/receipt/' + lastReceiptId + '?preview=1'" class="w-full h-64 border-none scale-90 origin-top"></iframe>
+                    <div class="overflow-x-hidden overflow-y-auto" style="max-height: 220px;">
+                        <iframe :src="'/pos/receipt/' + lastReceiptId + '?preview=1'" class="w-full border-none" style="height: 300px; min-width: 100%;"></iframe>
+                    </div>
                 </div>
             </template>
             <template x-if="String(lastReceiptId).startsWith('offline_')">
-                <div class="mb-8 border-2 border-amber-100 bg-amber-50 rounded-3xl p-6 text-center">
-                    <div class="w-12 h-12 bg-amber-100 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <div class="mb-5 border border-amber-200 bg-amber-50 rounded-xl p-4 text-center">
+                    <div class="w-10 h-10 bg-amber-100 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     </div>
                     <p class="text-xs font-black text-amber-700 uppercase tracking-widest mb-1">Receipt Pending Sync</p>
-                    <p class="text-[10px] font-bold text-amber-600/70">The receipt will be available to print once the system reconnects to the server.</p>
+                    <p class="text-[10px] font-bold text-amber-600/70">Will be available to print after reconnecting.</p>
                 </div>
             </template>
 
-            <div class="space-y-3">
-                <button @click="printReceipt(lastReceiptId)" class="w-full py-4 bg-blue-600 text-white rounded-2xl font-black uppercase tracking-widest shadow-lg shadow-blue-100">Print Receipt (Ctrl+P)</button>
-                <button @click="showSuccess = false" class="w-full py-4 bg-slate-100 text-slate-600 rounded-2xl font-black uppercase tracking-widest">Next Sale (Enter)</button>
+            <div class="space-y-2">
+                <button @click="printReceipt(lastReceiptId)" class="w-full py-2.5 bg-blue-600 text-white rounded-xl font-black text-sm uppercase tracking-widest shadow-lg shadow-blue-100 hover:bg-blue-700 transition-colors active:scale-[0.98]">
+                    <span class="hidden sm:inline">Print Receipt</span>
+                    <span class="sm:hidden">Print</span>
+                </button>
+                <button @click="showSuccess = false" class="w-full py-2.5 bg-slate-100 text-slate-600 rounded-xl font-black text-sm uppercase tracking-widest hover:bg-slate-200 transition-colors active:scale-[0.98]">New Sale</button>
             </div>
         </div>
     </div>
@@ -763,31 +776,31 @@
     </div>
 
     <!-- New Customer Modal -->
-    <div x-show="showNewCustomerModal" 
-         class="fixed inset-0 bg-slate-900/80 backdrop-blur-xl z-[100] flex items-center justify-center p-6" 
+    <div x-show="showNewCustomerModal"
+         class="fixed inset-0 bg-slate-900/80 backdrop-blur-xl z-[100] flex items-center justify-center p-4"
          x-transition:enter="transition ease-out duration-300"
          x-transition:enter-start="opacity-0"
          x-transition:enter-end="opacity-100"
          style="display: none;">
-        <div class="bg-white rounded-[40px] p-10 max-w-sm w-full shadow-2xl relative" x-on:click.away="showNewCustomerModal = false">
-            <button @click="showNewCustomerModal = false" class="absolute top-6 right-6 text-slate-400 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 p-2 rounded-xl transition-all">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl relative max-h-[92dvh] overflow-y-auto" x-on:click.away="showNewCustomerModal = false">
+            <button @click="showNewCustomerModal = false" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 p-1.5 rounded-lg transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
-            
-            <h2 class="text-2xl font-black text-slate-900 mb-2">Quick Add Customer</h2>
-            <p class="text-slate-500 text-xs font-bold mb-8">Register a new customer for credit sales.</p>
-            
+
+            <h2 class="text-lg font-black text-slate-900 mb-1">Add Customer</h2>
+            <p class="text-slate-500 text-xs font-bold mb-5">Register a customer for credit sales.</p>
+
             <div class="space-y-4">
                 <div>
                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Full Name</label>
-                    <input type="text" x-model="newCustomerName" class="w-full bg-slate-50 border-transparent rounded-2xl py-3 px-4 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-sm" placeholder="John Doe">
+                    <input type="text" x-model="newCustomerName" class="w-full bg-slate-50 border border-transparent rounded-xl py-2.5 px-4 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-sm" placeholder="Kwame Mensah">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Phone Number (Optional)</label>
-                    <input type="text" x-model="newCustomerPhone" class="w-full bg-slate-50 border-transparent rounded-2xl py-3 px-4 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-sm" placeholder="024 XXX XXXX">
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Phone Number <span class="normal-case text-slate-300">(Optional)</span></label>
+                    <input type="tel" inputmode="numeric" pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '')" x-model="newCustomerPhone" class="w-full bg-slate-50 border border-transparent rounded-xl py-2.5 px-4 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-sm" placeholder="0240000000">
                 </div>
-                
-                <button @click="saveNewCustomer()" :disabled="!newCustomerName || isSavingCustomer" class="w-full py-4 bg-blue-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-blue-100 hover:bg-blue-700 transition-all disabled:opacity-50 mt-4">
+
+                <button @click="saveNewCustomer()" :disabled="!newCustomerName || isSavingCustomer" class="w-full py-2.5 bg-blue-600 text-white rounded-xl font-black text-xs uppercase tracking-widest hover:bg-blue-700 transition-all disabled:opacity-50 active:scale-[0.98]">
                     <span x-text="isSavingCustomer ? 'Saving...' : 'Save Customer'"></span>
                 </button>
             </div>
@@ -795,33 +808,33 @@
     </div>
 
     <!-- Start Shift Modal -->
-    <div x-show="showShiftModal" 
-         class="fixed inset-0 bg-slate-900/80 backdrop-blur-xl z-[100] flex items-center justify-center p-6" 
+    <div x-show="showShiftModal"
+         class="fixed inset-0 bg-slate-900/80 backdrop-blur-xl z-[100] flex items-center justify-center p-4"
          x-transition:enter="transition ease-out duration-300"
          x-transition:enter-start="opacity-0"
          x-transition:enter-end="opacity-100">
-        <div class="bg-white rounded-[40px] p-10 max-w-md w-full shadow-2xl">
-            <div class="w-20 h-20 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center mb-8">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <div class="bg-white rounded-2xl p-6 sm:p-8 max-w-sm w-full shadow-2xl max-h-[92dvh] overflow-y-auto">
+            <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             </div>
-            <h2 class="text-3xl font-black text-slate-900 mb-2">Open Shift</h2>
-            <p class="text-slate-500 mb-8 font-bold">Please record your opening cash drawer balance to start selling.</p>
-            
-            <div class="space-y-6">
+            <h2 class="text-xl font-black text-slate-900 mb-1">Open Shift</h2>
+            <p class="text-slate-500 text-sm mb-5 font-medium">Enter your opening cash balance to start selling.</p>
+
+            <div class="space-y-4">
                 <div>
-                    <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3">Opening Cash (GHS)</label>
-                    <input type="number" x-model="openingCash" class="w-full bg-slate-50 border-transparent rounded-2xl py-5 px-6 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-black text-2xl" placeholder="0.00">
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Opening Cash (GHS)</label>
+                    <input dusk="opening-cash-input" type="number" x-model="openingCash" class="w-full bg-slate-50 border border-transparent rounded-xl py-3 px-4 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-black text-xl" placeholder="0.00">
                 </div>
-                
-                <div class="space-y-3">
-                    <button @click="openShift()" class="w-full py-5 bg-blue-600 text-white rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-blue-100 hover:bg-blue-700 transition-all active:scale-[0.98]">
-                        Start Selling Now
+
+                <div class="space-y-2">
+                    <button dusk="start-selling-btn" @click="openShift()" class="w-full py-2.5 bg-blue-600 text-white rounded-xl font-black text-sm uppercase tracking-widest hover:bg-blue-700 transition-all active:scale-[0.98]">
+                        Start Selling
                     </button>
 
                     <form action="{{ route('logout') }}" method="POST" class="w-full">
                         @csrf
-                        <button type="submit" class="w-full py-4 bg-slate-50 text-slate-500 rounded-2xl font-black uppercase tracking-widest hover:bg-slate-100 transition-all active:scale-[0.98]">
-                            Or Sign Out
+                        <button type="submit" class="w-full py-2.5 bg-slate-50 text-slate-500 rounded-xl font-black text-sm uppercase tracking-widest hover:bg-slate-100 transition-all active:scale-[0.98]">
+                            Sign Out
                         </button>
                     </form>
                 </div>
@@ -830,42 +843,42 @@
     </div>
 
     <!-- Close Shift Modal -->
-    <div x-show="showCloseShiftModal" 
-         class="fixed inset-0 bg-slate-900/80 backdrop-blur-xl z-[100] flex items-center justify-center p-6" 
+    <div dusk="close-shift-modal" x-show="showCloseShiftModal"
+         class="fixed inset-0 bg-slate-900/80 backdrop-blur-xl z-[100] flex items-center justify-center p-4"
          x-transition:enter="transition ease-out duration-300"
          x-transition:enter-start="opacity-0"
          x-transition:enter-end="opacity-100">
-        <div class="bg-white rounded-[40px] p-10 max-w-lg w-full shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar">
-            <h2 class="text-3xl font-black text-slate-900 mb-2">End of Shift</h2>
-            <p class="text-slate-500 mb-8 font-bold">Reconcile your drawer and finalize the day.</p>
-            
-            <div class="space-y-8">
+        <div class="bg-white rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-2xl max-h-[92dvh] overflow-y-auto custom-scrollbar">
+            <h2 class="text-xl font-black text-slate-900 mb-1">End of Shift</h2>
+            <p class="text-slate-500 text-sm mb-5 font-medium">Reconcile your drawer and finalize the day.</p>
+
+            <div class="space-y-5">
                 <!-- Summary Section -->
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-slate-50 p-4 rounded-2xl">
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-slate-50 p-3 rounded-xl">
                         <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Expected Cash</span>
-                        <p class="text-lg font-black text-slate-900 tabular" x-text="formatCurrency(shiftSummary?.expected_cash || 0)"></p>
+                        <p class="text-base font-black text-slate-900 tabular mt-0.5" x-text="formatCurrency(shiftSummary?.expected_cash || 0)"></p>
                     </div>
-                    <div class="bg-slate-50 p-4 rounded-2xl">
-                        <span class="text-[9px] font-black text-blue-600 uppercase tracking-widest">Momo Total</span>
-                        <p class="text-lg font-black text-slate-900 tabular" x-text="formatCurrency(shiftSummary?.momo || 0)"></p>
-                    </div>
-                </div>
-
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3">Actual Cash Counted (GHS)</label>
-                        <input type="number" x-model="closingCash" class="w-full bg-slate-50 border-transparent rounded-2xl py-5 px-6 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-black text-2xl" placeholder="0.00">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-black text-slate-400 uppercase tracking-widest mb-3">Shift Notes</label>
-                        <textarea x-model="shiftNotes" class="w-full bg-slate-50 border-transparent rounded-2xl py-4 px-6 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-bold text-sm" placeholder="Any discrepancies or remarks..."></textarea>
+                    <div class="bg-blue-50 p-3 rounded-xl">
+                        <span class="text-[9px] font-black text-blue-600 uppercase tracking-widest">MoMo Total</span>
+                        <p class="text-base font-black text-slate-900 tabular mt-0.5" x-text="formatCurrency(shiftSummary?.momo || 0)"></p>
                     </div>
                 </div>
 
-                <div class="flex gap-4">
-                    <button @click="showCloseShiftModal = false" class="flex-1 py-5 bg-slate-100 text-slate-600 rounded-2xl font-black uppercase tracking-widest hover:bg-slate-200 transition-all">Cancel</button>
-                    <button @click="closeShift()" class="flex-1 py-5 bg-red-600 text-white rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-red-100 hover:bg-red-700 transition-all">Finalize Shift</button>
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Actual Cash Counted (GHS)</label>
+                        <input dusk="closing-cash-input" type="number" x-model="closingCash" class="w-full bg-slate-50 border border-transparent rounded-xl py-3 px-4 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-black text-xl" placeholder="0.00">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Shift Notes</label>
+                        <textarea x-model="shiftNotes" rows="3" class="w-full bg-slate-50 border border-transparent rounded-xl py-3 px-4 focus:ring-0 focus:bg-white focus:border-blue-600 transition-all font-medium text-sm" placeholder="Any discrepancies or remarks..."></textarea>
+                    </div>
+                </div>
+
+                <div class="flex gap-3">
+                    <button @click="showCloseShiftModal = false" class="flex-1 py-2.5 bg-slate-100 text-slate-600 rounded-xl font-black text-sm uppercase tracking-widest hover:bg-slate-200 transition-all active:scale-[0.98]">Cancel</button>
+                    <button dusk="finalize-shift-btn" @click="closeShift()" class="flex-1 py-2.5 bg-red-600 text-white rounded-xl font-black text-sm uppercase tracking-widest hover:bg-red-700 transition-all active:scale-[0.98]">Finalize</button>
                 </div>
             </div>
         </div>
