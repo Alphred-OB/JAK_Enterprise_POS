@@ -21,7 +21,12 @@ class AppServiceProvider extends ServiceProvider
     {
         try {
             view()->share('settings', \App\Models\Setting::first() ?? new \App\Models\Setting());
-        } catch (\Throwable $e) {
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Only swallow the error when the settings table doesn't exist yet
+            // (e.g. before migrations run). Any other DB failure should surface.
+            if (!str_contains($e->getMessage(), 'settings')) {
+                throw $e;
+            }
             view()->share('settings', new \App\Models\Setting());
         }
 

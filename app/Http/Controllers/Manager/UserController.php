@@ -76,7 +76,12 @@ class UserController extends Controller
             'pin_code' => 'nullable|string|size:4',
         ]);
 
-        $user->update($request->only('name', 'email', 'role', 'pin_code'));
+        $user->update([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'role'     => $request->role,
+            'pin_code' => $request->filled('pin_code') ? $request->pin_code : null,
+        ]);
 
         if ($request->filled('password')) {
             $request->validate(['password' => ['required', 'confirmed', Password::min(8)->letters()->mixedCase()->numbers()]]);

@@ -16,7 +16,8 @@ return new class extends Migration
         });
 
         // Hash all existing plaintext PINs (≤6 chars means plaintext)
-        DB::table('users')->whereNotNull('pin_code')->get(['id', 'pin_code'])->each(function ($user) {
+        // Use lazy/chunk to avoid loading the entire users table into memory.
+        DB::table('users')->whereNotNull('pin_code')->lazyById(100, 'id')->each(function ($user) {
             if (strlen($user->pin_code) <= 6) {
                 DB::table('users')->where('id', $user->id)->update([
                     'pin_code' => Hash::make($user->pin_code),

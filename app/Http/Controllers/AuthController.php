@@ -31,6 +31,7 @@ class AuthController extends Controller
             if (!Auth::user()->is_active) {
                 Auth::guard('web')->logout();
                 $request->session()->invalidate();
+                $request->session()->regenerateToken();
                 RateLimiter::hit($this->throttleKey($request));
                 return back()->withErrors([
                     'email' => 'Your account has been deactivated. Please contact an administrator.',

@@ -74,10 +74,17 @@ class PurchaseController extends Controller
                     'updated_at'  => now(),
                 ];
 
-                $stockUpdates[$itemData['product_id']] = [
-                    'qty'        => $itemData['quantity'],
-                    'cost_price' => $itemData['unit_cost'],
-                ];
+                // Accumulate quantities so duplicate product lines in the same
+                // request are summed rather than overwritten.
+                if (isset($stockUpdates[$itemData['product_id']])) {
+                    $stockUpdates[$itemData['product_id']]['qty'] += $itemData['quantity'];
+                    $stockUpdates[$itemData['product_id']]['cost_price'] = $itemData['unit_cost'];
+                } else {
+                    $stockUpdates[$itemData['product_id']] = [
+                        'qty'        => $itemData['quantity'],
+                        'cost_price' => $itemData['unit_cost'],
+                    ];
+                }
             }
 
             // Single insert for all purchase items
