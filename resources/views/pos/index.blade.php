@@ -288,7 +288,7 @@
 
         <!-- Sidebar: Cart & Checkout -->
         <aside 
-            :class="showCartMobile ? 'fixed inset-0 z-40 bg-white flex flex-col' : 'hidden lg:flex lg:w-[420px] flex-col'"
+            :class="showCartMobile ? 'fixed inset-0 z-40 bg-white flex flex-col' : 'hidden lg:flex lg:w-[420px] flex-col h-full'"
             class="bg-white border-l border-slate-100 shadow-[-20px_0_50px_rgba(0,0,0,0.02)] transition-all duration-300"
         >
             <!-- Mobile Close Button -->
